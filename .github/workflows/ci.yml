@@ -1,0 +1,164 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# CI workflow: runs on every Pull Request into main.
+# Job 1 ("quality") checks the code and builds it.
+# Job 2 ("preview") uploads that build to Netlify as a temporary preview site
+# and posts the link as a comment on the Pull Request.
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Name shown in the GitHub "Actions" tab and on the PR status checks.
+name: ci
+
+# "on" = which events start this workflow.
+on:
+  # Run when a Pull Request is opened, or new commits are pushed to it...
+  pull_request:
+    # ...but only for PRs that target the main branch.
+    branches: [main]
+
+# Only one run per PR at a time.
+concurrency:
+  # Runs with the same group name share a queue: one group per PR number.
+  group: ci-${{ github.event.pull_request.number }}
+  # If you push again while an older run is still going, cancel the old one
+  # (its result would be out of date anyway).
+  cancel-in-progress: true
+
+# Permissions for the automatic GITHUB_TOKEN, kept to the minimum needed.
+permissions:
+  # Read the repository code (needed to check it out).
+  contents: read
+  # Write comments on the PR (needed to post the preview link).
+  pull-requests: write
+
+# A workflow is made of one or more jobs. Each job runs on a fresh machine.
+jobs:
+  # ── Job 1: lint, test and build ───────────────────────────────────────────
+  # "quality" is the job's ID, used to refer to it from other jobs.
+  quality:
+    # Name shown on the PR. Branch protection refers to this exact name.
+    name: Lint, test & build
+    # Run on a fresh Linux virtual machine provided by GitHub.
+    runs-on: ubuntu-latest
+    # Kill the job if it gets stuck for more than 10 minutes.
+    timeout-minutes: 10
+    # Steps run one after another; if any step fails, the job stops and fails.
+    steps:
+      # Download the PR's code onto the machine.
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Install Node.js.
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          # Read the Node version from the .nvmrc file (currently 22),
+          # so CI uses the same version as your laptop.
+          node-version-file: .nvmrc
+          # Cache downloaded npm packages between runs to speed things up.
+          cache: npm
+
+      # Install exact dependency versions from package-lock.json.
+      # "npm ci" is stricter and faster than "npm install" and never changes the lock file.
+      - name: Install dependencies
+        run: npm ci
+
+      # Run oxlint (the "lint" script in package.json). Fails on code errors.
+      - name: Lint
+        run: npm run lint
+
+      # TODO: add a "Test" step (npm test -- --run) once a test runner is set up
+
+      # Run "vite build". Produces the finished website in the dist/ folder.
+      - name: Build
+        run: npm run build
+
+      # Save dist/ so the next job can use it without building again.
+      # (Each job runs on a separate machine, so files aren't shared automatically.)
+      - name: Save build output
+        uses: actions/upload-artifact@v4
+        with:
+          # Name of the saved bundle; the next job downloads it by this name.
+          name: dist
+          # Folder to save.
+          path: dist
+          # Delete the saved bundle after 3 days to save storage.
+          retention-days: 3
+
+  # ── Job 2: deploy a preview to Netlify ────────────────────────────────────
+  preview:
+    # Name shown on the PR.
+    name: Deploy preview
+    # Wait for the "quality" job to finish, and only run if it passed.
+    needs: quality
+    # Only run for PRs from branches in this repo.
+    # PRs from forks (other people's copies) don't get access to secrets,
+    # so the deploy would fail; this skips it cleanly instead.
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    # Fresh Linux machine again.
+    runs-on: ubuntu-latest
+    # A deploy should be quick; stop after 5 minutes.
+    timeout-minutes: 5
+    steps:
+      # Get the dist/ folder that the "quality" job saved.
+      # No checkout or npm install needed: we only upload ready-made files.
+      - name: Download build output
+        uses: actions/download-artifact@v4
+        with:
+          # Must match the name used in "Save build output".
+          name: dist
+          # Put the files into a local dist/ folder.
+          path: dist
+
+      # Upload dist/ to Netlify as a preview (NOT production).
+      # Command, line by line:
+      #   npx --yes netlify-cli deploy  → download and run the Netlify CLI without asking
+      #   --dir=dist                    → the folder to upload
+      #   --alias=pr-<N>                → fixed preview URL: pr-<N>--<site-name>.netlify.app
+      #                                   (stays the same for every push to this PR)
+      #   --message="..."               → label shown in Netlify's Deploys list (PR number + commit)
+      #   --json > deploy.json          → write the result as JSON into deploy.json
+      # Then: read "deploy_url" from deploy.json with jq and save it as this step's
+      # output called "url", so the next step can use it.
+      - name: Deploy to Netlify (preview)
+        # ID lets later steps read this step's outputs (steps.deploy.outputs.url).
+        id: deploy
+        run: |
+          npx --yes netlify-cli deploy \
+            --dir=dist \
+            --alias=pr-${{ github.event.pull_request.number }} \
+            --message="PR #${{ github.event.pull_request.number }} – ${{ github.event.pull_request.head.sha }}" \
+            --json > deploy.json
+          echo "url=$(jq -r '.deploy_url' deploy.json)" >> "$GITHUB_OUTPUT"
+        # Environment variables the Netlify CLI reads to log in and pick the site.
+        # Values come from GitHub repo secrets, so they never appear in the code or logs.
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+
+      # Post (or update) a comment on the PR with the preview link.
+      - name: Comment preview URL on PR
+        # Lets us run a small JavaScript snippet that can call the GitHub API.
+        uses: actions/github-script@v7
+        env:
+          # The preview URL saved by the previous step.
+          PREVIEW_URL: ${{ steps.deploy.outputs.url }}
+        with:
+          script: |
+            // Hidden HTML marker so we can find our own comment again later.
+            const marker = '<!-- netlify-preview -->';
+            // Comment text: marker + preview link + short commit ID (first 7 characters).
+            const body = `${marker}\n🔍 **Deploy preview ready:** ${process.env.PREVIEW_URL}\n\nCommit: \`${context.payload.pull_request.head.sha.slice(0, 7)}\``;
+            // Get all existing comments on this PR.
+            const { data: comments } = await github.rest.issues.listComments({
+              ...context.repo,
+              issue_number: context.issue.number,
+            });
+            // Look for a comment we posted before (it contains the marker).
+            const existing = comments.find(c => c.body.includes(marker));
+            if (existing) {
+              // Found one: edit it, so the PR doesn't fill up with repeated comments.
+              await github.rest.issues.updateComment({ ...context.repo, comment_id: existing.id, body });
+            } else {
+              // First run on this PR: post a new comment.
+              await github.rest.issues.createComment({ ...context.repo, issue_number: context.issue.number, body });
+            }

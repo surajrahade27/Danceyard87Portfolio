@@ -1,0 +1,95 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Deploy workflow: runs every time code lands on main (for example, when a PR
+# is merged). It checks and builds the code again, then publishes it to the
+# live (production) Netlify site.
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Name shown in the GitHub "Actions" tab.
+name: deploy
+
+# "on" = which events start this workflow.
+on:
+  # Run on every push to main (a merged PR counts as a push).
+  push:
+    branches: [main]
+  # Also adds a "Run workflow" button in the Actions tab, so you can
+  # redeploy by hand without pushing new code.
+  workflow_dispatch:
+
+# Only one production deploy at a time.
+concurrency:
+  # Every run of this workflow shares one queue called "production".
+  group: production
+  # If a deploy is already running, wait for it instead of cancelling it
+  # (cancelling halfway through could leave the site half-updated).
+  cancel-in-progress: false
+
+# Permissions for the automatic GITHUB_TOKEN: only read the code.
+# This workflow doesn't need to write anything to GitHub.
+permissions:
+  contents: read
+
+jobs:
+  # "production" is the job's ID.
+  production:
+    # Name shown in the Actions tab.
+    name: Deploy to production
+    # Run on a fresh Linux virtual machine provided by GitHub.
+    runs-on: ubuntu-latest
+    # Kill the job if it gets stuck for more than 10 minutes.
+    timeout-minutes: 10
+    # Links this job to the "production" environment in GitHub
+    # (Settings → Environments). It shows a deploy history on the repo page.
+    # That environment has "Required reviewers" turned on, so the job pauses
+    # here until a reviewer clicks "Review deployments → Approve and deploy".
+    environment:
+      name: production
+    # Steps run one after another; if any step fails, the job stops
+    # and nothing is deployed.
+    steps:
+      # Download the code from main onto the machine.
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Install Node.js.
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          # Read the Node version from .nvmrc (currently 22).
+          node-version-file: .nvmrc
+          # Cache downloaded npm packages between runs to speed things up.
+          cache: npm
+
+      # Install exact dependency versions from package-lock.json.
+      - name: Install dependencies
+        run: npm ci
+
+      # Run oxlint. Checked again here as a safety net, in case something
+      # reached main without going through a PR.
+      - name: Lint
+        run: npm run lint
+
+      # TODO: add a "Test" step (npm test -- --run) once a test runner is set up
+
+      # Run "vite build". Produces the finished website in dist/.
+      - name: Build
+        run: npm run build
+
+      # Upload dist/ to Netlify and make it the live site.
+      # Command, line by line:
+      #   npx --yes netlify-cli deploy  → download and run the Netlify CLI without asking
+      #   --dir=dist                    → the folder to upload
+      #   --prod                        → publish to the real production URL
+      #                                   (without it, Netlify only makes a draft URL)
+      #   --message="main – <commit>"   → label shown in Netlify's Deploys list
+      - name: Deploy to Netlify (production)
+        run: |
+          npx --yes netlify-cli deploy \
+            --dir=dist \
+            --prod \
+            --message="main – ${{ github.sha }}"
+        # Environment variables the Netlify CLI reads to log in and pick the site.
+        # Values come from GitHub repo secrets, so they never appear in the code or logs.
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
