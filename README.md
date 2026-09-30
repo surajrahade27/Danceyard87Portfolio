@@ -25,3 +25,7 @@ npm run dev    # http://localhost:5173
 - `.github/workflows/deploy.yml` — on push to `main`: lint, build, and deploy to production (gated by the `production` environment).
 
 Both need the repo secrets `NETLIFY_AUTH_TOKEN` and `NETLIFY_SITE_ID`.
+
+## Docs
+
+- [Functional spec](docs/functional-spec/)
