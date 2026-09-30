@@ -1,0 +1,140 @@
+{
+  "name": "Dance Yard Studio",
+  "shortName": "Dance Yard",
+  "positioning": "Mumbai-based premium dance academy",
+  "location": {
+    "venue": "Pawar Public School",
+    "area": "Hinjewadi Phase 3",
+    "city": "Pune",
+    "region": "Maharashtra",
+    "mapQuery": "Pawar Public School, Hinjewadi Phase 3, Pune"
+  },
+  "contact": {
+    "whatsapp": "919021267998",
+    "whatsappDisplay": "+91 90212 67998",
+    "whatsappMessage": "Hi Dance Yard! I'd like to know more about your dance classes.",
+    "phone": "+919699377718",
+    "phoneDisplay": "+91 96993 77718",
+    "instagram": "https://www.instagram.com/danceyard87/",
+    "instagramHandle": "@danceyard87"
+  },
+  "hero": {
+    "eyebrow": "Limited admission · Hinjewadi Phase 3, Pune",
+    "lead": "A Mumbai-based premium dance academy in Pune. Train with professional dancers who have worked with Bollywood's biggest choreographers, and get real chances on film sets, fashion runways and reality-show stages.",
+    "slides": ["stageSpin", "crewStage", "ensembleStage", "breaking"],
+    "showreel": "fRh_vgS2dFE"
+  },
+  "stats": [
+    { "value": "20+", "label": "Years in the dance industry" },
+    { "value": "35+", "label": "Dance forms" },
+    { "value": "100+", "label": "Dancers sent to Bollywood" }
+  ],
+  "marquee": [
+    ["Bollywood", "Hip-Hop", "Contemporary", "Freestyle", "Kids Dance", "Dance Fitness", "Workshops", "Photo & Video Shoots"],
+    ["Bollywood opportunities", "Camera training", "Fashion shows", "Reality show prep", "Mumbai mentors", "Limited admission"]
+  ],
+  "about": {
+    "paragraphs": [
+      "With over 20 years of experience in the dance industry, Dance Yard Studio has been passionately training and inspiring dancers to achieve their dreams. We offer training in 35+ dance forms, helping students explore their talent and grow with confidence.",
+      "We are proud to have sent 100+ dancers to Bollywood, many of whom are currently working in the industry."
+    ],
+    "mission": "To nurture exceptional talent for the industry while helping every dance lover turn their passion for dance into a successful journey.",
+    "photos": ["studioCrew", "raisedHand"]
+  },
+  "why": [
+    { "stat": "100+", "title": "Dancers sent to Bollywood", "text": "Many of them are still working in the industry today.", "big": true },
+    { "icon": "star", "title": "Mumbai mentors", "text": "Professionals travel from Mumbai to share technique and real industry insight." },
+    { "icon": "camera", "title": "Camera-ready training", "text": "Learn camera angles, on-screen performance and industry standards." },
+    { "stat": "35+", "title": "Dance forms", "text": "Explore every style under one roof and find the one that's yours." },
+    { "icon": "trophy", "title": "Stage & screen exposure", "text": "Bollywood songs, fashion shows and dance reality shows." }
+  ],
+  "learn": [
+    { "icon": "activity", "title": "Basic dance workout", "text": "Build stamina, rhythm and control from your very first class." },
+    { "icon": "flame", "title": "Advanced dance practice", "text": "Sharpen technique and performance with pro-level routines." },
+    { "icon": "stretch", "title": "Body stretches", "text": "Flexibility and safe, injury-free movement in every session." },
+    { "icon": "leaf", "title": "Nutrition guide", "text": "Eat right to train harder and recover faster." }
+  ],
+  "programs": [
+    { "name": "Bollywood", "audience": "all", "audienceLabel": "All ages", "blurb": "High-energy film choreography with expression, style and stage presence.", "tags": ["Beginner to advanced", "Stage & screen"], "photo": "bollywood" },
+    { "name": "Hip-Hop", "audience": "adults", "audienceLabel": "Teens & adults", "blurb": "Grooves, isolations and the attitude to own any floor.", "tags": ["Grooves", "Choreography"], "photo": "hiphopCrew" },
+    { "name": "Contemporary", "audience": "adults", "audienceLabel": "Teens & adults", "blurb": "Fluid, emotional movement built on strong technique.", "tags": ["Technique", "Expression"], "photo": "contemporary" },
+    { "name": "Freestyle & Battles", "audience": "adults", "audienceLabel": "Teens & adults", "blurb": "Find your own style and the confidence to step into a cypher.", "tags": ["Improvisation", "Battles"], "photo": "cypher" },
+    { "name": "Kids Dance", "audience": "kids", "audienceLabel": "Kids", "blurb": "Fun, confidence-building classes that grow rhythm and coordination.", "tags": ["Fun first", "Rhythm & coordination"], "photo": "kidsDandiya" },
+    { "name": "Dance Fitness", "audience": "adults", "audienceLabel": "Teens & adults", "blurb": "Cardio-packed dance workouts that feel like a party.", "tags": ["Stamina", "Stretching"], "photo": "fitnessClass" }
+  ],
+  "opportunities": [
+    { "icon": "film", "title": "Bollywood opportunities", "text": "Get a chance to work as a dancer in Bollywood songs and performances alongside popular stars.", "photo": "stageTroupe" },
+    { "icon": "camera", "title": "Camera & industry training", "text": "Learn about camera angles, on-screen performance and the professional standards followed in the entertainment industry.", "photo": "filming" },
+    { "icon": "hanger", "title": "Fashion shows", "text": "Get guidance and opportunities to take part in prestigious fashion events such as Lakmé Fashion Week, with proper training and industry insights.", "photo": "runway" },
+    { "icon": "tv", "title": "Dance reality shows", "text": "Professional training and guidance for auditions and participation in popular dance reality shows.", "photo": "realityStage" }
+  ],
+  "mentors": {
+    "statement": "At Dance Yard, you learn from talented Mumbai-based professional dancers who have worked with some of Bollywood's biggest choreographers, including Ganesh Acharya, Saroj Khan and Ganesh Hegde.",
+    "detail": "These industry professionals travel specially from Mumbai to Dance Yard Studio to share their experience, techniques and real industry insights with our students.",
+    "names": ["Ganesh Acharya", "Saroj Khan", "Ganesh Hegde"],
+    "photo": "studioJump"
+  },
+  "choreography": {
+    "photo": "weddingDance",
+    "services": [
+      { "icon": "rings", "title": "Wedding choreography", "text": "Couple entries and first dances that look effortless on the big day." },
+      { "icon": "music", "title": "Sangeet performances", "text": "Routines for family and friends, planned around your songs and schedule." },
+      { "icon": "heart", "title": "Couple & family dance", "text": "Simple, fun steps for every age and every level." },
+      { "icon": "briefcase", "title": "Corporate events", "text": "Team performances and flash mobs for annual days and launches." },
+      { "icon": "cap", "title": "School & college events", "text": "Stage-ready group routines for fests, competitions and annual days." },
+      { "icon": "camera", "title": "Photo & video shoots", "text": "Portfolio photos and reels that show your dancing at its best." }
+    ]
+  },
+  "videosNote": "Sample videos embedded from YouTube. We'll swap in Dance Yard's own videos once the channel links are ready.",
+  "videos": [
+    { "id": "fRh_vgS2dFE", "title": "Justin Bieber – Sorry (PURPOSE : The Movement)", "category": "Hip-Hop" },
+    { "id": "2vjPBrBU-TM", "title": "Sia – Chandelier", "category": "Contemporary" },
+    { "id": "lp-EO5I60KA", "title": "Ed Sheeran – Thinking Out Loud", "category": "Couple dance" },
+    { "id": "4m1EFMoRFvY", "title": "Beyoncé – Single Ladies (Put a Ring on It)", "category": "Performance" },
+    { "id": "sOnqjkJTMaA", "title": "Michael Jackson – Thriller", "category": "Performance" },
+    { "id": "h_D3VFfhvs4", "title": "Michael Jackson – Smooth Criminal", "category": "Performance" }
+  ],
+  "gallery": [
+    { "photo": "stageSpin", "category": "Performances", "caption": "Solo in motion" },
+    { "photo": "classicalStage", "category": "Performances", "caption": "Classical on stage" },
+    { "photo": "mirrorClass", "category": "Classes", "caption": "Mirror work" },
+    { "photo": "crewStage", "category": "Street & Hip-Hop", "caption": "Crew showcase" },
+    { "photo": "newlyweds", "category": "Weddings", "caption": "First dance" },
+    { "photo": "kidJump", "category": "Kids", "caption": "Pure joy" },
+    { "photo": "soloStage", "category": "Performances", "caption": "Spotlight solo" },
+    { "photo": "studioCrew", "category": "Classes", "caption": "Studio session" },
+    { "photo": "breaking", "category": "Street & Hip-Hop", "caption": "Breaking" },
+    { "photo": "shootScarf", "category": "Shoots", "caption": "Portfolio shoot" },
+    { "photo": "sangeet", "category": "Weddings", "caption": "Sangeet night" },
+    { "photo": "stageGroupTall", "category": "Performances", "caption": "Ensemble" },
+    { "photo": "kidsDandiya", "category": "Kids", "caption": "Dandiya ready" },
+    { "photo": "crewMono", "category": "Street & Hip-Hop", "caption": "Crew in monochrome" },
+    { "photo": "folkTrio", "category": "Performances", "caption": "Folk trio" },
+    { "photo": "shootStudio", "category": "Shoots", "caption": "Studio shoot" }
+  ],
+  "events": [
+    { "type": "Annual Day", "title": "Annual Day Showcase", "when": "Date to be announced", "text": "Every batch on one stage: a full production with costumes, lights and a live audience.", "photo": "whiteEnsemble" },
+    { "type": "Workshop", "title": "Masterclass with Mumbai mentors", "when": "Dates shared on WhatsApp", "text": "Industry professionals travel from Mumbai to teach technique and share real industry insight.", "photo": "mirrorClass" },
+    { "type": "Shoot", "title": "Photo & video shoot day", "when": "Book your slot on WhatsApp", "text": "Portfolio-ready photos and reels to showcase your dancing.", "photo": "shootScarf" }
+  ],
+  "testimonialsNote": "Placeholder reviews for the sample. We'll replace them with real words from Dance Yard students and parents.",
+  "testimonials": [
+    { "quote": "The mentors from Mumbai changed how I think about performing. I finally understand camera angles and how to own a frame.", "who": "Student", "detail": "Bollywood batch" },
+    { "quote": "My daughter walks in shy and walks out beaming. Rehearsing for the stage has been the highlight of her year.", "who": "Parent", "detail": "Kids batch" },
+    { "quote": "Our sangeet routine came together in three weeks, and everyone from my nephew to my grandmother nailed it.", "who": "Client", "detail": "Sangeet choreography" },
+    { "quote": "Tough, fun and honest training. The audition prep gave me the confidence to go for a reality show.", "who": "Student", "detail": "Freestyle batch" }
+  ],
+  "faqs": [
+    { "q": "Where are the classes held?", "a": "At Pawar Public School, Hinjewadi Phase 3, Pune. Tap “Get directions” in the contact section for the map." },
+    { "q": "Which dance styles can I learn?", "a": "We offer training in 35+ dance forms. Message us on WhatsApp for the full list and the batches running right now." },
+    { "q": "Are beginners welcome?", "a": "Yes. Training starts with a basic dance workout and builds up to advanced dance practice, so you grow at your own pace." },
+    { "q": "Who teaches at Dance Yard?", "a": "Mumbai-based professional dancers who have worked with some of Bollywood's biggest choreographers. They travel to Pune specially to teach our students." },
+    { "q": "Can Dance Yard help me get into Bollywood, fashion shows or reality shows?", "a": "We give students guidance and opportunities for Bollywood songs and performances, fashion events such as Lakmé Fashion Week, and dance reality show auditions, along with camera and industry training." },
+    { "q": "Do you do photo and video shoots?", "a": "Yes. We shoot portfolio photos and dance videos. Message us on WhatsApp to book a slot." },
+    { "q": "What are the fees and batch timings?", "a": "Batches and timings change through the year, so message us on WhatsApp for current availability and fees." },
+    { "q": "How do I join?", "a": "Fill in the enquiry form on this page or message us on WhatsApp. Admissions are limited, so book early." }
+  ],
+  "footer": {
+    "blurb": "Mumbai-based premium dance academy in Hinjewadi Phase 3, Pune. Dance classes, workshops, and photo and video shoots."
+  }
+}

@@ -1,0 +1,104 @@
+.fab,
+.bar {
+  position: fixed;
+  z-index: 40;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(24px);
+  transition:
+    opacity 0.4s,
+    transform 0.5s var(--ease-out),
+    visibility 0s 0.5s;
+}
+
+.show {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition:
+    opacity 0.4s,
+    transform 0.5s var(--ease-out);
+}
+
+/* ── WhatsApp button, tablets and up ───────────────────── */
+.fab {
+  right: 24px;
+  bottom: 24px;
+  display: none;
+  align-items: center;
+  gap: 10px;
+  height: 60px;
+  padding: 0 16px;
+  border-radius: 999px;
+  background: #25d366;
+  color: #04210f;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 12px 30px -8px rgb(37 211 102 / 60%);
+}
+
+@media (min-width: 720px) {
+  .fab {
+    display: inline-flex;
+  }
+}
+
+/* Pulsing ring to draw the eye */
+.fab::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  animation: ring 2.4s var(--ease-out) infinite;
+}
+
+@keyframes ring {
+  0% {
+    box-shadow: 0 0 0 0 rgb(37 211 102 / 55%);
+  }
+
+  70%,
+  100% {
+    box-shadow: 0 0 0 18px rgb(37 211 102 / 0%);
+  }
+}
+
+/* Label slides out on hover */
+.fabLabel {
+  max-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  transition: max-width 0.5s var(--ease-out);
+}
+
+@media (hover: hover) {
+  .fab:hover .fabLabel {
+    max-width: 140px;
+  }
+}
+
+/* ── Bottom bar, phones only ───────────────────────────── */
+.bar {
+  left: 12px;
+  right: 12px;
+  bottom: max(12px, env(safe-area-inset-bottom));
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: rgb(5 5 5 / 82%);
+  backdrop-filter: blur(14px);
+}
+
+.bar :global(.btn) {
+  min-height: 48px;
+  padding-inline: 12px;
+}
+
+@media (min-width: 720px) {
+  .bar {
+    display: none;
+  }
+}

@@ -1,0 +1,76 @@
+.marquee {
+  position: relative;
+  z-index: 3;
+  padding-block: 36px 56px;
+  overflow: hidden;
+}
+
+.row {
+  --stroke: var(--accent);
+  --fill: var(--surface);
+  display: flex;
+  overflow: hidden;
+}
+
+.row:first-child {
+  --stroke: var(--on-accent);
+  --fill: var(--accent);
+  position: relative;
+  z-index: 1;
+  background: var(--accent);
+  color: var(--on-accent);
+  box-shadow: var(--glow);
+  transform: rotate(-2deg) scale(1.06);
+}
+
+.row:last-child {
+  margin-top: -6px;
+  border-block: 1px solid var(--border);
+  background: var(--surface);
+  transform: rotate(1.6deg) scale(1.06);
+}
+
+/* Moved by Marquee.jsx, which ties speed and direction to scrolling */
+.track {
+  display: flex;
+  flex-shrink: 0;
+  min-width: max-content;
+  will-change: transform;
+}
+
+/* The star spins with the ribbon */
+.star {
+  display: inline-block;
+  animation: star-spin 6s linear infinite;
+}
+
+@keyframes star-spin {
+  to {
+    rotate: 360deg;
+  }
+}
+
+.track li {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  padding: 16px 14px;
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, 2.4vw, 1.75rem);
+  font-weight: 800;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.outline {
+  color: var(--fill);
+  -webkit-text-stroke: 2.4px var(--stroke);
+  paint-order: stroke fill;
+}
+
+.star {
+  font-size: 0.7em;
+  color: var(--stroke);
+  -webkit-text-stroke: 0;
+}
+

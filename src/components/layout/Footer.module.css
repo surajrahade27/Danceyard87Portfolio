@@ -1,0 +1,153 @@
+.footer {
+  position: relative;
+  overflow: hidden;
+  padding-bottom: var(--space-8);
+  border-top: 1px solid var(--border);
+  background:
+    radial-gradient(ellipse at 50% 120%, rgb(var(--accent-rgb) / 14%), transparent 60%),
+    var(--bg);
+}
+
+/* Leave room for the sticky call-to-action bar on phones */
+@media (max-width: 719px) {
+  .footer {
+    padding-bottom: 104px;
+  }
+}
+
+/* Giant outlined wordmark across the top of the footer */
+.bigWord {
+  padding-top: var(--space-12);
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 10.4vw, 10.5rem);
+  font-weight: 900;
+  line-height: 0.9;
+  text-align: center;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--bg);
+  -webkit-text-stroke: 3px rgb(var(--accent-rgb) / 45%);
+  paint-order: stroke fill;
+  user-select: none;
+}
+
+.grid {
+  display: grid;
+  gap: var(--space-12) var(--space-8);
+  padding-block: var(--space-12);
+}
+
+@media (min-width: 640px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: 1.5fr 1fr 1fr 1.4fr;
+  }
+}
+
+.brand p {
+  max-width: 36ch;
+  margin-top: var(--space-6);
+  color: var(--muted);
+}
+
+.socials {
+  display: flex;
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+}
+
+.socials a {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border: 1px solid var(--border-strong);
+  border-radius: 50%;
+  transition:
+    border-color 0.3s,
+    color 0.3s,
+    box-shadow 0.3s;
+}
+
+@media (hover: hover) {
+  .socials a:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    box-shadow: var(--glow);
+  }
+}
+
+.grid h2 {
+  margin-bottom: var(--space-4);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.grid ul {
+  display: grid;
+  gap: 10px;
+}
+
+.grid li a {
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+@media (hover: hover) {
+  .grid li a:hover {
+    color: var(--text);
+  }
+}
+
+.contact li {
+  display: flex;
+  gap: var(--space-3);
+  color: var(--muted);
+}
+
+.contact svg {
+  flex-shrink: 0;
+  margin-top: 4px;
+  color: var(--accent);
+}
+
+.bottom {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--space-3) var(--space-6);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--border);
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.legal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-6);
+}
+
+.credits {
+  margin-top: var(--space-4);
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.credits summary {
+  width: fit-content;
+  cursor: pointer;
+}
+
+.credits p {
+  margin-top: var(--space-2);
+}

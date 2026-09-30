@@ -1,0 +1,68 @@
+.cursor {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 90;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.cursor[data-visible='true'] {
+  opacity: 1;
+}
+
+/* Dialogs sit in the browser's top layer, above the ring, so hide it */
+:global(html:has(dialog[open])) .cursor {
+  opacity: 0;
+}
+
+.ring {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 1.5px solid var(--accent);
+  border-radius: 50%;
+  translate: -50% -50%;
+  box-shadow: 0 0 14px rgb(var(--accent-rgb) / 45%);
+  transition:
+    width 0.4s var(--ease-out),
+    height 0.4s var(--ease-out),
+    background 0.3s,
+    scale 0.2s;
+}
+
+.cursor[data-state='hover'] .ring {
+  width: 60px;
+  height: 60px;
+  background: rgb(var(--accent-rgb) / 12%);
+}
+
+.cursor[data-state='label'] .ring {
+  width: 88px;
+  height: 88px;
+  background: var(--accent);
+  box-shadow: var(--glow);
+}
+
+.cursor[data-pressed='true'] .ring {
+  scale: 0.8;
+}
+
+.label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--on-accent);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.cursor[data-state='label'] .label {
+  opacity: 1;
+}

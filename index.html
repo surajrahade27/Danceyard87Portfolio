@@ -1,14 +1,73 @@
 <!doctype html>
-<html lang="en">
+<html lang="en-IN" id="top" data-grade="neon">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Dance Yard Studio | Premium Dance Academy in Hinjewadi, Pune</title>
+    <meta
+      name="description"
+      content="Dance Yard Studio is a Mumbai-based premium dance academy in Hinjewadi Phase 3, Pune. Training in 35+ dance forms with Mumbai mentors, plus Bollywood, fashion show and dance reality show opportunities."
+    />
+    <meta name="theme-color" content="#050505" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Danceyard87 – dance portfolio." />
-    <title>Danceyard87</title>
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Dance Yard Studio" />
+    <meta property="og:title" content="Dance Yard Studio – Premium Dance Academy, Hinjewadi, Pune" />
+    <meta
+      property="og:description"
+      content="Train with Mumbai-based professionals. 35+ dance forms. Limited admission."
+    />
+    <meta name="twitter:card" content="summary" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://images.unsplash.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Monoton&family=Poppins:wght@400;500;600;700&family=Unbounded:wght@500;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "Dance Yard Studio",
+        "description": "Mumbai-based premium dance academy offering dance classes, workshops, and photo and video shoots.",
+        "telephone": "+91-96993-77718",
+        "sameAs": ["https://www.instagram.com/danceyard87/"],
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Pawar Public School, Hinjewadi Phase 3",
+          "addressLocality": "Pune",
+          "addressRegion": "Maharashtra",
+          "addressCountry": "IN"
+        }
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
+
+    <!-- Netlify Forms registers the form from this hidden copy at deploy time.
+         Field names must match the React form in src/sections/Join.jsx. -->
+    <form name="enquiry" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="hidden" name="form-name" value="enquiry" />
+      <input name="bot-field" />
+      <input name="name" />
+      <input name="parentName" />
+      <input name="age" />
+      <input name="phone" />
+      <input name="email" />
+      <select name="program"></select>
+      <select name="batch"></select>
+      <input name="level" />
+      <textarea name="message"></textarea>
+    </form>
+
+    <noscript>
+      Dance Yard Studio, Pawar Public School, Hinjewadi Phase 3, Pune. WhatsApp +91 90212 67998.
+    </noscript>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

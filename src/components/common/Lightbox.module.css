@@ -1,0 +1,136 @@
+.dialog {
+  width: 100vw;
+  height: 100dvh;
+}
+
+.dialog[open] {
+  display: grid;
+  grid-template-rows: 1fr auto;
+}
+
+.stage {
+  display: grid;
+  place-items: center;
+  min-height: 0;
+  padding: 72px 16px 8px;
+  touch-action: pan-y;
+}
+
+@media (min-width: 768px) {
+  .stage {
+    padding: 72px 96px 8px;
+  }
+}
+
+.image {
+  max-width: 100%;
+  max-height: calc(100dvh - 180px);
+  object-fit: contain;
+  border-radius: var(--radius);
+  box-shadow: 0 0 80px rgb(var(--accent-rgb) / 18%);
+  user-select: none;
+  animation: photo-in 0.5s var(--ease-out);
+}
+
+@keyframes photo-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+    filter: blur(6px);
+  }
+}
+
+.nav,
+.close {
+  position: fixed;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border: 1px solid var(--border-strong);
+  border-radius: 50%;
+  background: rgb(0 0 0 / 55%);
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+  transition:
+    border-color 0.3s,
+    color 0.3s,
+    transform 0.4s var(--ease-out);
+}
+
+@media (hover: hover) {
+  .nav:hover,
+  .close:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .close:hover {
+    transform: rotate(90deg);
+  }
+}
+
+.nav {
+  top: 50%;
+  translate: 0 -50%;
+}
+
+.prev {
+  left: 16px;
+}
+
+.next {
+  right: 16px;
+}
+
+/* On phones the arrows sit at the bottom, out of the photo's way */
+@media (max-width: 767px) {
+  .nav {
+    top: auto;
+    bottom: 96px;
+    translate: none;
+  }
+}
+
+.close {
+  top: 16px;
+  right: 16px;
+}
+
+.caption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-6);
+  padding: var(--space-4) var(--space-4) var(--space-6);
+  font-size: 0.95rem;
+}
+
+@media (min-width: 768px) {
+  .caption {
+    padding-inline: 96px;
+  }
+}
+
+.caption p:first-child {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.counter {
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  color: var(--accent);
+}
+
+.credit {
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.credit a {
+  color: var(--text);
+}

@@ -1,0 +1,156 @@
+.grid {
+  display: grid;
+  gap: 64px;
+  align-items: center;
+}
+
+@media (min-width: 960px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    gap: 96px;
+  }
+}
+
+.media {
+  position: relative;
+  isolation: isolate;
+  padding: 0 12% 12% 0;
+}
+
+.main {
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+}
+
+.main > * {
+  height: 100%;
+}
+
+.side {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 46%;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border: 6px solid var(--bg);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+.side > * {
+  height: 100%;
+}
+
+/* Neon frame offset behind the main photo */
+.media::before {
+  content: '';
+  position: absolute;
+  inset: 24px 8% 8% -24px;
+  z-index: -1;
+  border: 2px solid var(--accent);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--glow);
+}
+
+.badge {
+  position: absolute;
+  left: -12px;
+  bottom: 4%;
+  display: grid;
+  place-items: center;
+  width: 132px;
+  height: 132px;
+  border-radius: 50%;
+  background: rgb(5 5 5 / 80%);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 0 0 1px var(--border);
+}
+
+@media (min-width: 640px) {
+  .badge {
+    width: 160px;
+    height: 160px;
+  }
+}
+
+.ring {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  animation: spin 18s linear infinite;
+}
+
+.ring text {
+  fill: var(--accent);
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 3px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.badgeCore {
+  display: grid;
+  justify-items: center;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.badgeCore strong {
+  font-family: var(--font-display);
+  font-size: 1.7rem;
+  line-height: 1.1;
+  letter-spacing: 0;
+  color: var(--text);
+}
+
+.text {
+  max-width: 58ch;
+  margin-bottom: var(--space-4);
+  font-size: 1.05rem;
+  color: var(--muted);
+}
+
+.mission {
+  position: relative;
+  margin-top: var(--space-8);
+  padding: var(--space-6) var(--space-6) var(--space-6) 28px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: linear-gradient(120deg, rgb(var(--accent-rgb) / 8%), transparent 60%);
+}
+
+.mission::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 18px;
+  bottom: 18px;
+  width: 3px;
+  border-radius: 3px;
+  background: var(--accent);
+  box-shadow: var(--glow);
+}
+
+.mission h3 {
+  margin-bottom: var(--space-2);
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.mission p {
+  font-size: 1.1rem;
+  font-weight: 500;
+}

@@ -1,0 +1,114 @@
+.masonry {
+  columns: 1;
+  column-gap: var(--space-4);
+}
+
+@media (min-width: 560px) {
+  .masonry {
+    columns: 2;
+  }
+}
+
+@media (min-width: 900px) {
+  .masonry {
+    columns: 3;
+  }
+}
+
+@media (min-width: 1200px) {
+  .masonry {
+    columns: 4;
+  }
+}
+
+.item {
+  margin-bottom: var(--space-4);
+  break-inside: avoid;
+  animation-name: flip-in;
+  animation-duration: 0.9s;
+  transform-origin: 50% 0;
+}
+
+@keyframes flip-in {
+  from {
+    opacity: 0;
+    transform: perspective(900px) rotateX(-38deg) translateY(40px) scale(0.94);
+  }
+}
+
+.tile {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: var(--radius);
+  background: var(--surface);
+  cursor: zoom-in;
+}
+
+.tile img {
+  height: auto;
+}
+
+.caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: grid;
+  gap: 2px;
+  padding: 40px var(--space-4) var(--space-4);
+  background: linear-gradient(to top, rgb(5 5 5 / 90%), transparent);
+  font-weight: 600;
+  text-align: left;
+  transform: translateY(100%);
+  transition: transform 0.5s var(--ease-out);
+}
+
+.caption span {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.zoom {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--on-accent);
+  opacity: 0;
+  transform: scale(0.6) rotate(-90deg);
+  transition:
+    opacity 0.4s,
+    transform 0.5s var(--ease-out);
+}
+
+@media (hover: hover) {
+  .tile:hover .caption,
+  .tile:focus-visible .caption {
+    transform: none;
+  }
+
+  .tile:hover .zoom,
+  .tile:focus-visible .zoom {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Touch screens have no hover, so captions are always shown */
+@media (hover: none) {
+  .caption {
+    transform: none;
+  }
+}

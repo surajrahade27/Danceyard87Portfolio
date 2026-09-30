@@ -1,0 +1,100 @@
+.grid {
+  display: grid;
+  gap: var(--space-12);
+}
+
+@media (min-width: 960px) {
+  .grid {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    align-items: start;
+    gap: 80px;
+  }
+
+  .intro {
+    position: sticky;
+    top: calc(var(--header-height) + 24px);
+  }
+}
+
+.list {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.item {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  transition:
+    border-color 0.4s,
+    background 0.4s;
+}
+
+.open {
+  border-color: rgb(var(--accent-rgb) / 50%);
+  background: linear-gradient(120deg, rgb(var(--accent-rgb) / 8%), transparent 60%), var(--surface);
+}
+
+.item h3 {
+  font-family: var(--font-body);
+  font-size: 1.02rem;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: 0;
+}
+
+.item button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  width: 100%;
+  min-height: 64px;
+  padding: var(--space-4) var(--space-6);
+  border: 0;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+}
+
+.icon {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--border-strong);
+  border-radius: 50%;
+  transition:
+    transform 0.5s var(--ease-out),
+    background 0.3s,
+    color 0.3s,
+    border-color 0.3s;
+}
+
+.open .icon {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--on-accent);
+  transform: rotate(135deg);
+}
+
+/* Height animates from 0 to auto via the grid-rows trick */
+.panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.5s var(--ease-out);
+}
+
+.open .panel {
+  grid-template-rows: 1fr;
+}
+
+.panel > div {
+  overflow: hidden;
+}
+
+.panel p {
+  padding: 0 var(--space-6) var(--space-6);
+  color: var(--muted);
+}

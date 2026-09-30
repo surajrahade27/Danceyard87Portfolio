@@ -1,0 +1,131 @@
+.grid {
+  display: grid;
+  gap: var(--space-6);
+}
+
+@media (min-width: 640px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1100px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 100%;
+  min-height: 480px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  transition:
+    border-color 0.4s,
+    box-shadow 0.4s;
+}
+
+@media (hover: hover) {
+  .card:hover {
+    border-color: rgb(var(--accent-rgb) / 60%);
+    box-shadow: 0 0 40px -10px rgb(var(--accent-rgb) / 50%);
+  }
+}
+
+.image {
+  position: absolute;
+  inset: 0;
+}
+
+/* Darken the bottom so the text stays readable over any photo */
+.card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgb(5 5 5 / 96%) 12%, rgb(5 5 5 / 55%) 50%, transparent 78%);
+  pointer-events: none;
+}
+
+.body {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: var(--space-3);
+  padding: var(--space-6);
+}
+
+.audience {
+  width: fit-content;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: var(--accent);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--on-accent);
+}
+
+.body h3 {
+  font-size: clamp(1.5rem, 2.4vw, 1.9rem);
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.blurb {
+  color: rgb(244 246 241 / 82%);
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.tags li {
+  padding: 4px 12px;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.enquire {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: fit-content;
+  min-height: 44px;
+  margin-top: var(--space-2);
+  padding: 0;
+  border: 0;
+  background: none;
+  font-weight: 600;
+  color: var(--accent);
+  cursor: pointer;
+}
+
+.enquire svg {
+  transition: transform 0.3s var(--ease-out);
+}
+
+@media (hover: hover) {
+  .enquire:hover svg {
+    transform: translateX(5px);
+  }
+}
+
+.note {
+  margin-top: var(--space-8);
+  color: var(--muted);
+}
+
+.note a {
+  color: var(--accent);
+}

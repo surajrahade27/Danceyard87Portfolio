@@ -1,0 +1,120 @@
+.carousel {
+  max-width: 880px;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.quote {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-6);
+  min-height: 300px;
+  animation: quote-in 0.8s var(--ease-out);
+}
+
+@keyframes quote-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+    filter: blur(6px);
+  }
+}
+
+.mark {
+  color: var(--accent);
+  filter: drop-shadow(0 0 12px rgb(var(--accent-rgb) / 60%));
+}
+
+.quote blockquote {
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 2.8vw, 2rem);
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.quote figcaption {
+  color: var(--muted);
+}
+
+.quote figcaption strong {
+  color: var(--accent);
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  margin-top: var(--space-8);
+}
+
+.arrow {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 1px solid var(--border-strong);
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  transition:
+    border-color 0.3s,
+    color 0.3s;
+}
+
+@media (hover: hover) {
+  .arrow:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+}
+
+.dots {
+  display: flex;
+  gap: 4px;
+}
+
+.dot {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.dot span {
+  position: relative;
+  width: 32px;
+  height: 4px;
+  overflow: hidden;
+  border-radius: 4px;
+  background: rgb(255 255 255 / 18%);
+}
+
+/* The current dot fills up until the next review */
+.dot span::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.dot[aria-current='true'] span::after {
+  transform: scaleX(1);
+  box-shadow: var(--glow);
+}
+
+.dot.running[aria-current='true'] span::after {
+  animation: fill 7s linear;
+}
+
+@keyframes fill {
+  from {
+    transform: scaleX(0);
+  }
+}
