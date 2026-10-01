@@ -1,12 +1,13 @@
 import { reducedMotion } from './motion'
 
 // Colour grades re-tint every photo and accent on the site. The values live
-// in styles/variables.css under :root[data-grade='…'].
+// in styles/variables.css under :root[data-grade='…']. The first grade is the
+// default; keep it in sync with <html data-grade> in index.html.
 export const GRADES = [
+  { id: 'disco', label: 'Disco', swatch: ['#ff2fb4', '#8b5cf6'] },
   { id: 'neon', label: 'Neon', swatch: ['#9dff3c', '#ff3ea5'] },
   { id: 'cinematic', label: 'Cinematic', swatch: ['#22d3c5', '#ff8a3d'] },
   { id: 'noir', label: 'Noir', swatch: ['#f0f0ec', '#ff3b3b'] },
-  { id: 'disco', label: 'Disco', swatch: ['#ff2fb4', '#8b5cf6'] },
 ]
 
 const STORAGE_KEY = 'dy-grade'

@@ -2,7 +2,7 @@ import { useSyncExternalStore } from 'react'
 import { GRADES, applyGrade, currentGrade, subscribeGrade } from '../../utils/grade'
 import styles from './GradeSwitcher.module.css'
 
-// Three colour grades for the whole site: Neon (brochure look), Cinematic, Noir.
+// Colour grades for the whole site: Disco (default pink), Neon (brochure look), Cinematic, Noir.
 function GradeSwitcher({ compact = false, className = '' }) {
   // Read from <html data-grade>, so every switcher on the page stays in sync
   const grade = useSyncExternalStore(subscribeGrade, currentGrade)
