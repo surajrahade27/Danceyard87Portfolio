@@ -1,7 +1,17 @@
 # ─────────────────────────────────────────────────────────────────────────────
 # Deploy workflow: runs every time code lands on main (for example, when a PR
-# is merged). It checks and builds the code again, then publishes it to the
-# live (production) Netlify site.
+# is merged). It checks and builds the code ONCE, then promotes that same build
+# through three environments, one after another:
+#
+#   build ──▶ Dev (automatic) ──▶ UAT (waits for approval) ──▶ Live (waits for approval)
+#
+# All three are on the same Netlify site:
+#   Dev  → https://dev--<site-name>.netlify.app
+#   UAT  → https://uat--<site-name>.netlify.app
+#   Live → the production site URL / custom domain
+#
+# The approval steps are set up in GitHub, not in this file:
+# Settings → Environments → "uat" and "production" → Required reviewers.
 # ─────────────────────────────────────────────────────────────────────────────
 
 # Name shown in the GitHub "Actions" tab.
@@ -13,16 +23,8 @@ on:
   push:
     branches: [main]
   # Also adds a "Run workflow" button in the Actions tab, so you can
-  # redeploy by hand without pushing new code.
+  # rebuild and redeploy by hand without pushing new code.
   workflow_dispatch:
-
-# Only one production deploy at a time.
-concurrency:
-  # Every run of this workflow shares one queue called "production".
-  group: production
-  # If a deploy is already running, wait for it instead of cancelling it
-  # (cancelling halfway through could leave the site half-updated).
-  cancel-in-progress: false
 
 # Permissions for the automatic GITHUB_TOKEN: only read the code.
 # This workflow doesn't need to write anything to GitHub.
@@ -30,22 +32,17 @@ permissions:
   contents: read
 
 jobs:
-  # "production" is the job's ID.
-  production:
+  # ── Job 1: lint, test and build ───────────────────────────────────────────
+  # "build" is the job's ID, used to refer to it from other jobs.
+  build:
     # Name shown in the Actions tab.
-    name: Deploy to production
+    name: Lint, test & build
     # Run on a fresh Linux virtual machine provided by GitHub.
     runs-on: ubuntu-latest
     # Kill the job if it gets stuck for more than 10 minutes.
     timeout-minutes: 10
-    # Links this job to the "production" environment in GitHub
-    # (Settings → Environments). It shows a deploy history on the repo page.
-    # That environment has "Required reviewers" turned on, so the job pauses
-    # here until a reviewer clicks "Review deployments → Approve and deploy".
-    environment:
-      name: production
     # Steps run one after another; if any step fails, the job stops
-    # and nothing is deployed.
+    # and nothing is deployed anywhere.
     steps:
       # Download the code from main onto the machine.
       - name: Checkout code
@@ -75,21 +72,154 @@ jobs:
       - name: Build
         run: npm run build
 
-      # Upload dist/ to Netlify and make it the live site.
+      # Save the build so the deploy jobs can use it without building again.
+      # This is what makes it "one build": Dev, UAT and Live all get these exact files.
+      # netlify.toml goes along too, because the Netlify CLI reads the security
+      # headers (CSP etc.) from it when deploying.
+      - name: Save build output
+        uses: actions/upload-artifact@v4
+        with:
+          # Name of the saved bundle; the deploy jobs download it by this name.
+          name: site
+          # Files to save (one path per line).
+          path: |
+            dist
+            netlify.toml
+          # An approval can wait up to 30 days in GitHub, so keep the build that long.
+          retention-days: 30
+
+  # ── Job 2: deploy to Dev ──────────────────────────────────────────────────
+  dev:
+    # Name shown in the Actions tab.
+    name: Deploy to Dev
+    # Wait for the "build" job to finish, and only run if it passed.
+    needs: build
+    # Fresh Linux machine again.
+    runs-on: ubuntu-latest
+    # A deploy should be quick; stop after 5 minutes.
+    timeout-minutes: 5
+    # Links this job to the "dev" environment in GitHub (Settings → Environments).
+    # It shows a deploy history and a link to the site on the repo page.
+    # No approval: Dev updates on every merge.
+    environment:
+      name: dev
+      # The link shown in GitHub, taken from the deploy step's output below.
+      url: ${{ steps.deploy.outputs.url }}
+    # One Dev deploy at a time. A newer one waits instead of cancelling a
+    # deploy halfway through.
+    concurrency:
+      group: deploy-dev
+      cancel-in-progress: false
+    steps:
+      # Get the files that the "build" job saved.
+      # No checkout or npm install needed: we only upload ready-made files.
+      - name: Download build output
+        uses: actions/download-artifact@v4
+        with:
+          # Must match the name used in "Save build output".
+          name: site
+
+      # Upload dist/ to Netlify under the fixed "dev" address.
       # Command, line by line:
       #   npx --yes netlify-cli deploy  → download and run the Netlify CLI without asking
       #   --dir=dist                    → the folder to upload
-      #   --prod                        → publish to the real production URL
-      #                                   (without it, Netlify only makes a draft URL)
-      #   --message="main – <commit>"   → label shown in Netlify's Deploys list
+      #   --alias=dev                   → fixed URL: dev--<site-name>.netlify.app
+      #                                   (the live site is NOT changed)
+      #   --message="..."               → label shown in Netlify's Deploys list
+      #   --json > deploy.json          → write the result as JSON into deploy.json
+      # Then: read "deploy_url" from deploy.json with jq and save it as this step's
+      # output called "url" (used for the environment link above).
+      - name: Deploy to Netlify (dev)
+        # ID lets the job read this step's outputs (steps.deploy.outputs.url).
+        id: deploy
+        run: |
+          npx --yes netlify-cli deploy \
+            --dir=dist \
+            --alias=dev \
+            --message="dev – ${{ github.sha }}" \
+            --json > deploy.json
+          echo "url=$(jq -r '.deploy_url' deploy.json)" >> "$GITHUB_OUTPUT"
+        # Environment variables the Netlify CLI reads to log in and pick the site.
+        # Values come from GitHub repo secrets, so they never appear in the code or logs.
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+
+  # ── Job 3: deploy to UAT ──────────────────────────────────────────────────
+  # Same as Dev, with two differences: it starts only after Dev succeeded,
+  # and it waits for a reviewer to approve it.
+  uat:
+    name: Deploy to UAT
+    # Only after the same build is on Dev.
+    needs: dev
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    # The "uat" environment has "Required reviewers" turned on, so the job pauses
+    # here until a reviewer clicks "Review deployments → Approve and deploy".
+    environment:
+      name: uat
+      url: ${{ steps.deploy.outputs.url }}
+    concurrency:
+      group: deploy-uat
+      cancel-in-progress: false
+    steps:
+      - name: Download build output
+        uses: actions/download-artifact@v4
+        with:
+          name: site
+
+      # Same command as Dev, with --alias=uat → uat--<site-name>.netlify.app
+      - name: Deploy to Netlify (uat)
+        id: deploy
+        run: |
+          npx --yes netlify-cli deploy \
+            --dir=dist \
+            --alias=uat \
+            --message="uat – ${{ github.sha }}" \
+            --json > deploy.json
+          echo "url=$(jq -r '.deploy_url' deploy.json)" >> "$GITHUB_OUTPUT"
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+
+  # ── Job 4: deploy to Live (production) ────────────────────────────────────
+  # Starts only after UAT succeeded, and waits for its own approval, so the
+  # client can check UAT first.
+  production:
+    name: Deploy to Live (production)
+    # Only after the same build is on UAT.
+    needs: uat
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    # The "production" environment has "Required reviewers" turned on, so the job
+    # pauses here until a reviewer clicks "Review deployments → Approve and deploy".
+    environment:
+      name: production
+      url: ${{ steps.deploy.outputs.url }}
+    # Only one production deploy at a time; wait instead of cancelling
+    # (cancelling halfway through could leave the site half-updated).
+    concurrency:
+      group: production
+      cancel-in-progress: false
+    steps:
+      - name: Download build output
+        uses: actions/download-artifact@v4
+        with:
+          name: site
+
+      # Upload dist/ to Netlify and make it the live site.
+      # Same as above, but:
+      #   --prod  → publish to the real production URL instead of an alias
+      #   ".url"  → the JSON field holding the production URL
       - name: Deploy to Netlify (production)
+        id: deploy
         run: |
           npx --yes netlify-cli deploy \
             --dir=dist \
             --prod \
-            --message="main – ${{ github.sha }}"
-        # Environment variables the Netlify CLI reads to log in and pick the site.
-        # Values come from GitHub repo secrets, so they never appear in the code or logs.
+            --message="main – ${{ github.sha }}" \
+            --json > deploy.json
+          echo "url=$(jq -r '.url' deploy.json)" >> "$GITHUB_OUTPUT"
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}

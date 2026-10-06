@@ -62,6 +62,11 @@
     { "name": "Kids Dance", "audience": "kids", "audienceLabel": "Kids", "blurb": "Fun, confidence-building classes that grow rhythm and coordination.", "tags": ["Fun first", "Rhythm & coordination"], "photo": "kidsDandiya" },
     { "name": "Dance Fitness", "audience": "adults", "audienceLabel": "Teens & adults", "blurb": "Cardio-packed dance workouts that feel like a party.", "tags": ["Stamina", "Stretching"], "photo": "fitnessClass" }
   ],
+  "batches": [
+    { "time": "6 – 7 PM", "label": "Evening batch" },
+    { "time": "7 – 8 PM", "label": "Evening batch" },
+    { "time": "8 – 9 PM", "label": "Evening batch" }
+  ],
   "opportunities": [
     { "icon": "film", "title": "Bollywood opportunities", "text": "Get a chance to work as a dancer in Bollywood songs and performances alongside popular stars.", "photo": "stageTroupe" },
     { "icon": "camera", "title": "Camera & industry training", "text": "Learn about camera angles, on-screen performance and the professional standards followed in the entertainment industry.", "photo": "filming" },

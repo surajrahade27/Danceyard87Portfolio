@@ -26,12 +26,19 @@ npm run dev    # http://localhost:5173
 ## CI/CD
 
 - `.github/workflows/ci.yml` — on every PR into `main`: lint, build, and deploy a Netlify preview (link posted on the PR).
-- `.github/workflows/deploy.yml` — on push to `main`: lint, build, and deploy to production (gated by the `production` environment).
+- `.github/workflows/deploy.yml` — on push to `main`: lint and build once, then promote that build through three environments on the same Netlify site:
 
-Both need the repo secrets `NETLIFY_AUTH_TOKEN` and `NETLIFY_SITE_ID`.
+| Environment | URL | GitHub environment | Approval |
+|---|---|---|---|
+| Dev | `https://dev--<site>.netlify.app` | `dev` | None, deploys on every merge |
+| UAT | `https://uat--<site>.netlify.app` | `uat` | Required reviewer |
+| Live | Production URL / custom domain | `production` | Required reviewer |
+
+Both workflows need the repo secrets `NETLIFY_AUTH_TOKEN` and `NETLIFY_SITE_ID`. Turn on **Required reviewers** for the `uat` and `production` environments in GitHub → Settings → Environments; without it, UAT and Live deploy straight after Dev.
 
 The enquiry form uses Netlify Forms: turn on form detection in the Netlify site settings. Netlify registers the form from the hidden copy in `index.html`, so keep its field names in sync with `src/sections/Join.jsx`.
 
 ## Docs
 
 - [Functional spec](docs/functional-spec/)
+- [Technical spec](docs/tech-spec/technical-spec.md) – architecture, flow diagrams, data model, CI/CD and operations

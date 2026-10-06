@@ -121,6 +121,32 @@
   }
 }
 
+.batch {
+  display: grid;
+  gap: var(--space-3);
+  height: 100%;
+  padding: var(--space-6);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  transition:
+    border-color 0.4s,
+    box-shadow 0.4s;
+}
+
+@media (hover: hover) {
+  .batch:hover {
+    border-color: rgb(var(--accent-rgb) / 60%);
+    box-shadow: 0 0 40px -10px rgb(var(--accent-rgb) / 50%);
+  }
+}
+
+.time {
+  font-size: clamp(2rem, 3.2vw, 2.6rem);
+  font-weight: 800;
+  color: var(--accent);
+}
+
 .note {
   margin-top: var(--space-8);
   color: var(--muted);

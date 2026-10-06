@@ -17,6 +17,8 @@ const PROGRAM_OPTIONS = [
   'Not sure yet',
 ]
 
+const HEARD_FROM_OPTIONS = ['Instagram', 'YouTube', 'Google search', 'Friend or family', 'Saw a performance', 'Other']
+
 const PERKS = [
   { icon: 'star', text: 'Mentors from Mumbai' },
   { icon: 'trophy', text: 'Bollywood, fashion show and reality show exposure' },
@@ -189,6 +191,15 @@ function Join() {
                     </label>
                   ))}
                 </fieldset>
+                <div className={`${styles.field} ${styles.select} ${styles.wide}`}>
+                  <select id="f-heard" name="heardFrom" defaultValue="">
+                    <option value="">Choose one</option>
+                    {HEARD_FROM_OPTIONS.map((source) => (
+                      <option key={source}>{source}</option>
+                    ))}
+                  </select>
+                  <label htmlFor="f-heard">How did you hear about us? (optional)</label>
+                </div>
                 <div className={`${styles.field} ${styles.wide}`}>
                   <textarea id="f-message" name="message" rows="3" placeholder=" " />
                   <label htmlFor="f-message">Anything else? (optional)</label>

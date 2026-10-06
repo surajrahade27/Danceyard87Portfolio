@@ -18,6 +18,9 @@ const LINKS = [
 
 const YEAR = new Date().getFullYear()
 
+// Set at build time in vite.config.js: package.json version + git commit
+const VERSION = `v${__APP_VERSION__} (${__COMMIT__})`
+
 // One credit per photographer, for the sample photos from Unsplash
 const credits = [...new Map(allPhotos.map((p) => [p.credit, p])).values()]
 
@@ -96,6 +99,7 @@ function Footer() {
         <p className={styles.legal}>
           <a href="/privacy">Privacy policy</a>
           <span>Sample videos from YouTube</span>
+          <span>{VERSION}</span>
         </p>
       </div>
 

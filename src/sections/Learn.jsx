@@ -14,7 +14,7 @@ function Learn() {
           center
           title={
             <>
-              From first step to <span className="neon">full routine</span>
+              From first step to <span className="neon">dance class routine</span>
             </>
           }
         />
