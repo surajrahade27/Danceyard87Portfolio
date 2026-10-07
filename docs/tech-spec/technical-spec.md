@@ -47,7 +47,7 @@ Developers building and maintaining the site, and reviewers approving releases. 
 | Term | Meaning |
 |---|---|
 | **Section** | One block of the homepage (Hero, Classes, Gallery, …), a component in `src/sections/`. |
-| **Grade** | A site-wide colour theme (Disco, Neon, Cinematic, Noir) that re-tints accents and photos. |
+| **Grade** | A site-wide colour theme (Cinematic, Disco, Neon, Noir) that re-tints accents and photos. |
 | **Graded image** | A photo shown through the grade's filter and tint (`.graded` in `global.css`). |
 | **Reveal** | Entrance animation that plays once when an element scrolls into view. |
 | **Deploy preview** | A temporary Netlify URL built from a pull request: `pr-<N>--<site>.netlify.app`. |
@@ -572,7 +572,7 @@ erDiagram
 | Key | Type | Used by | Notes |
 |---|---|---|---|
 | `name`, `shortName`, `positioning` | string | Footer, Contact, Privacy | |
-| `location` | `{ venue, area, city, region, mapQuery }` | `utils/contact`, Contact | `mapQuery` drives the map and directions |
+| `location` | `{ venue, street, locality, area, city, region, postalCode, mapQuery, mapUrl }` | `utils/contact`, Contact | `mapQuery` drives the embedded map; `mapUrl` (Google Maps share link) is the "Get directions" link; `area` + `city` are the short form used in copy |
 | `contact` | see ER diagram | `utils/contact`, Header, Footer, Contact | `instagram` is optional – UI hides Instagram links when empty |
 | `hero` | `{ eyebrow, lead, slides: photoKey[], showreel: videoId }` | Hero | First slide loads eagerly |
 | `stats` | `{ value, label }[]` | Hero | `value` like `"20+"`; `CountUp` animates the number part |
@@ -815,7 +815,7 @@ How the grade reaches the screen:
 
 ```mermaid
 flowchart LR
-  attr["html data-grade<br/>disco, neon, cinematic, noir"] --> tokens["variables.css<br/>accent RGB channels, grade filter, tint, blend"]
+  attr["html data-grade<br/>cinematic, disco, neon, noir"] --> tokens["variables.css<br/>accent RGB channels, grade filter, tint, blend"]
   tokens --> ui["Buttons, neon text, glows, chips<br/>global.css + CSS Modules"]
   tokens --> photos["Graded images<br/>img filter + tinted overlay"]
   tokens --> canvas["Sparkles canvas<br/>reads accent colours via getComputedStyle"]
@@ -823,9 +823,9 @@ flowchart LR
 
 | Grade | Default | Look |
 |---|---|---|
-| `disco` | Yes | Hot pink + violet, gold sparkle |
+| `cinematic` | Yes | Orange + teal film grade |
+| `disco` | | Hot pink + violet, gold sparkle |
 | `neon` | | Brochure look: neon green + pink |
-| `cinematic` | | Teal and orange film grade |
 | `noir` | | Off-white + red |
 
 #### 4.8.7 Intro curtain
@@ -879,8 +879,8 @@ flowchart LR
 | `whatsappLink` | `(message = contact.whatsappMessage) => string` | `wa.me` link with encoded message |
 | `phoneLink` | `string` | `tel:+91…` |
 | `mapEmbedUrl` | `string` | Google Maps embed URL for `location.mapQuery`, zoom 15 |
-| `directionsUrl` | `string` | Google Maps search URL |
-| `addressLine` | `string` | "venue, area, city" |
+| `directionsUrl` | `string` | `location.mapUrl` |
+| `addressLine` | `string` | "venue, street, locality, region postalCode" |
 
 **`utils/media.js`**
 
@@ -1050,7 +1050,7 @@ To verify before launch: colour contrast of muted text and neon accents in **all
 |---|---|
 | `<title>`, meta description | Done (homepage); Privacy and 404 set their own titles |
 | Open Graph / Twitter card | Done, but **no `og:image`** or `og:url` |
-| Structured data | `LocalBusiness` JSON-LD; missing URL, postal code, geo, opening hours (waiting on client) |
+| Structured data | `LocalBusiness` JSON-LD with full address, postal code, geo and map link; missing URL and opening hours (waiting on client) |
 | `robots.txt` | Allows all; no sitemap reference |
 | `sitemap.xml` | Missing |
 | Canonical URL | Missing (needs the final domain) |
@@ -1195,7 +1195,7 @@ Wiring: add `"test": "vitest"` to `package.json` and replace the `TODO` lines in
 | 2 | P1 | No error boundary; a bad photo key blanks the whole site | Outage from a content typo | Add data-integrity test (R1–R7) in CI and a top-level error boundary with a WhatsApp fallback |
 | 3 | P1 | Hidden form in `index.html` must match `Join.jsx` by hand | New fields silently dropped by Netlify | Form contract test |
 | 4 | P1 | Form notifications and quota not documented as configured | Missed enquiries | Turn on email notifications to the studio; check Free-plan form limits |
-| 5 | P1 | Phone number +91 96993 77718 – takes calls? | Dead "Call now" button | Confirm with client; remove `tel:` links if not |
+| 5 | P1 | Phone number +91 63965 76838 – takes calls? | Dead "Call now" button | Confirm with client; remove `tel:` links if not |
 | 6 | P1 | Children's data in the form | Legal exposure | Legal review; consent wording/checkbox; retention policy |
 | 7 | P1 | No `og:image`, canonical, sitemap; no custom domain | Poor link previews and indexing | Add once logo and domain arrive |
 | 8 | P2 | Unknown paths return HTTP 200 (soft 404) | Search engines may index junk URLs | Replace `/*` rewrite with explicit routes (`/`, `/privacy`) and copy `index.html` to `404.html` at build so Netlify returns 404 |
@@ -1217,7 +1217,7 @@ Technical decisions waiting on the client (see [client profile §10](../function
 1. Final domain name, and who owns the domain and the Netlify account.
 2. Who owns the GitHub repository after launch, and who approves production deploys?
 3. Email address(es) for enquiry notifications.
-4. Does +91 96993 77718 take calls?
+4. Does +91 63965 76838 take calls?
 5. Logo files (SVG/PNG) – needed for header, favicon set and `og:image`.
 6. Analytics and tracking: none, Google Analytics, Search Console, Meta Pixel?
 7. Real photos and videos, with publishing consent (and parental consent for minors).

@@ -30,3 +30,11 @@ export function youtubeThumb(id, quality) {
 export function youtubeEmbed(id) {
   return `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&modestbranding=1&playsinline=1`
 }
+
+// Instagram's public embed player: free, no API key. `code` is the part of a
+// post or reel link after /p/ or /reel/. It can't autoplay, so visitors tap play.
+export const INSTAGRAM_ORIGIN = 'https://www.instagram.com'
+
+export function instagramEmbed(code) {
+  return `${INSTAGRAM_ORIGIN}/p/${code}/embed/`
+}

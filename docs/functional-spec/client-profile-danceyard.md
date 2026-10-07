@@ -14,10 +14,10 @@
 | Positioning | Mumbai-based premium dance academy (Instagram bio) |
 | Experience | 20+ years in the dance industry |
 | Dance forms | 35+ |
-| Location | Pawar Public School, Hinjewadi Phase 3 (brochure reads "pwar public school hinjewadi phase"; Instagram gives "Hinjewadi- 3" — school name spelling **to confirm**) |
+| Location | Podium 2, Megapolis Splendour Society, Phase 3, Rajiv Gandhi Infotech Park, Hinjawadi, Maharashtra 411057 ([Google Maps](https://maps.app.goo.gl/ATBojFhwSGXV4GCb9)). Replaces the earlier Pawar Public School address from the brochure |
 | City | Pune, Maharashtra |
 | WhatsApp | 9021267998 — WhatsApp only, per Instagram (so no click-to-call on this number) |
-| Phone | +91 96993 77718 (from the brochure; whether it takes calls **to confirm**) |
+| Phone | +91 63965 76838 |
 | Services | Dance classes, workshops, photo and video shoots (Instagram bio) |
 | Instagram | [@danceyard87](https://www.instagram.com/danceyard87/) |
 | Logo | Seen on brochure only — original file not received yet |

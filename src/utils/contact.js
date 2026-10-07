@@ -10,6 +10,6 @@ export const phoneLink = `tel:${contact.phone}`
 
 export const mapEmbedUrl = `https://www.google.com/maps?q=${encodeURIComponent(location.mapQuery)}&z=15&output=embed`
 
-export const directionsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location.mapQuery)}`
+export const directionsUrl = location.mapUrl
 
-export const addressLine = `${location.venue}, ${location.area}, ${location.city}`
+export const addressLine = `${location.venue}, ${location.street}, ${location.locality}, ${location.region} ${location.postalCode}`

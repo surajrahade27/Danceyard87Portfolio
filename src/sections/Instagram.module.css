@@ -1,0 +1,193 @@
+/* Play button and caption styles come from Videos.module.css */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-4);
+}
+
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-6);
+  }
+}
+
+/* Portrait like the posts. The accent glow shows while the picture loads. */
+.item {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  border-radius: var(--radius-lg);
+  background:
+    radial-gradient(circle at 25% 15%, rgb(var(--accent-rgb) / 30%), transparent 60%),
+    radial-gradient(circle at 85% 85%, rgb(var(--accent-2-rgb) / 22%), transparent 55%),
+    var(--surface);
+}
+
+/* The live embed cropped to its picture. Instagram puts a 54px header above
+   a 4:5 picture, so the embed is laid out at twice the card's width (never
+   below Instagram's minimum width), scaled to half and shifted up. */
+.thumb {
+  --width: 200%;
+  --scale: 0.5;
+  --shift: 0%;
+  --lift: 0%;
+
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-lg);
+  background: transparent;
+}
+
+/* A 16:9 picture fills the card's height and is centred. Laid out at four
+   times the card's width so the scale, and the size of Instagram's play
+   icon, stays close to the other cards.
+   scale = (5/4) / (4 × 9/16), shift = (1 − 4 × scale) / 2 */
+.landscape {
+  --width: 400%;
+  --scale: 0.5556;
+  --shift: -61.11%;
+}
+
+/* Reels Instagram lets play here show as 9:16 video with black bars inside
+   the 4:5 frame. Zoom until the video fills the card's width, then centre.
+   scale = 0.5 × (4/5) / (9/16), shift = lift = (1 − 2 × scale) / 2 */
+.letterboxed {
+  --scale: 0.7111;
+  --shift: -21.11%;
+  --lift: 21.11%;
+}
+
+.thumb iframe {
+  position: absolute;
+  top: calc(-54px * var(--scale) - var(--lift));
+  left: var(--shift);
+  width: var(--width);
+  max-width: none;
+  height: calc(200% + 60px);
+  border: 0;
+  transform: scale(var(--scale));
+  transform-origin: 0 0;
+  pointer-events: none;
+  filter: var(--grade-filter);
+  transition: filter 0.9s var(--ease-out);
+}
+
+/* True colours on hover or keyboard focus, like the other graded photos */
+@media (hover: hover) {
+  .item:hover .thumb iframe {
+    filter: none;
+  }
+}
+
+.item:has(:focus-visible) .thumb iframe {
+  filter: none;
+}
+
+.item:has(:focus-visible) .thumb::after {
+  opacity: 0;
+}
+
+/* Scoped to .grid so these win over the shared video card, whichever
+   stylesheet loads last. Transparent so the picture shows through. */
+.grid .card {
+  min-height: 0;
+  background: transparent;
+}
+
+.type,
+.badge {
+  position: absolute;
+  top: var(--space-3);
+  z-index: 1;
+  border: 1px solid var(--border-strong);
+  background: rgb(0 0 0 / 55%);
+}
+
+.type {
+  left: var(--space-3);
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.badge {
+  right: var(--space-3);
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  color: var(--text);
+}
+
+/* Centred over the play icon Instagram draws on the picture; the dark ring
+   also hides the "Watch on Instagram" label it puts underneath */
+.grid .play {
+  top: 50%;
+  width: 52px;
+  height: 52px;
+  box-shadow:
+    var(--glow),
+    0 0 0 18px rgb(5 5 5 / 82%);
+}
+
+.grid .meta {
+  gap: var(--space-1);
+  padding: var(--space-3);
+}
+
+.grid .title {
+  display: -webkit-box;
+  overflow: hidden;
+  font-size: 0.9rem;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+/* Phone cards only have room for the title below the play button */
+.meta > :first-child,
+.date {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .grid .play {
+    width: 72px;
+    height: 72px;
+  }
+
+  .grid .meta {
+    gap: var(--space-2);
+    padding: var(--space-4);
+  }
+
+  .grid .title {
+    font-size: 1rem;
+  }
+
+  .meta > :first-child {
+    display: block;
+  }
+
+  .date {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  margin-top: var(--space-8);
+}

@@ -22,6 +22,30 @@
   border: 0;
 }
 
+/* Instagram posts are portrait, and the embed brings its own white card with a
+   header and footer. Its height comes from the embed; scroll if it's taller
+   than the screen. */
+.reel {
+  width: min(420px, calc(100vw - 32px));
+}
+
+.reelFrame {
+  max-height: calc(100dvh - 120px);
+  overflow-y: auto;
+  border: 1px solid rgb(var(--accent-rgb) / 40%);
+  border-radius: var(--radius-lg);
+  background: #fff;
+  box-shadow:
+    0 0 60px rgb(var(--accent-rgb) / 25%),
+    var(--shadow-lg);
+}
+
+.reelFrame iframe {
+  display: block;
+  width: 100%;
+  border: 0;
+}
+
 .bar {
   display: flex;
   align-items: center;

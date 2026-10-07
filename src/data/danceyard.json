@@ -3,18 +3,22 @@
   "shortName": "Dance Yard",
   "positioning": "Mumbai-based premium dance academy",
   "location": {
-    "venue": "Pawar Public School",
+    "venue": "Podium 2, Megapolis Splendour Society",
+    "street": "Phase 3, Rajiv Gandhi Infotech Park",
+    "locality": "Hinjawadi",
     "area": "Hinjewadi Phase 3",
     "city": "Pune",
     "region": "Maharashtra",
-    "mapQuery": "Pawar Public School, Hinjewadi Phase 3, Pune"
+    "postalCode": "411057",
+    "mapQuery": "Splendour Society, Phase 3, Rajiv Gandhi Infotech Park, Hinjawadi, Maharashtra 411057",
+    "mapUrl": "https://maps.app.goo.gl/ATBojFhwSGXV4GCb9"
   },
   "contact": {
     "whatsapp": "919021267998",
     "whatsappDisplay": "+91 90212 67998",
     "whatsappMessage": "Hi Dance Yard! I'd like to know more about your dance classes.",
-    "phone": "+919699377718",
-    "phoneDisplay": "+91 96993 77718",
+    "phone": "+916396576838",
+    "phoneDisplay": "+91 63965 76838",
     "instagram": "https://www.instagram.com/danceyard87/",
     "instagramHandle": "@danceyard87"
   },
@@ -99,6 +103,22 @@
     { "id": "sOnqjkJTMaA", "title": "Michael Jackson – Thriller", "category": "Performance" },
     { "id": "h_D3VFfhvs4", "title": "Michael Jackson – Smooth Criminal", "category": "Performance" }
   ],
+  "instagramSheet": "",
+  "instagramNote": "Latest posts from @danceyard87, played in Instagram's own player. Instagram lets some reels play here; the rest show a \"Watch on Instagram\" button.",
+  "instagram": [
+    { "code": "DdvaMFtDXHO", "type": "photo", "title": "Hip-hop classes", "category": "Posters", "date": "2026-09-26" },
+    { "code": "DdjW2Omso2b", "type": "reel", "title": "Little stars at Splendour Ganeshotsav", "category": "Ganeshotsav", "date": "2026-09-21" },
+    { "code": "DddPx-MDXun", "type": "photo", "title": "Garba hip-hop", "category": "Posters", "date": "2026-09-19" },
+    { "code": "Ddb_sOYTG_3", "type": "reel", "title": "Little stars in gold", "category": "Ganeshotsav", "date": "2026-09-18" },
+    { "code": "Ddb1e0zPD36", "type": "reel", "title": "Deva Shree Ganesha", "category": "Ganeshotsav", "date": "2026-09-18", "landscape": true },
+    { "code": "DdX-aHNIbn3", "type": "reel", "title": "Jai Ganesh Deva on stage", "category": "Ganeshotsav", "date": "2026-09-17" },
+    { "code": "Dc-gp-mvfov", "type": "reel", "title": "Kids hip-hop: Qeher", "category": "Classes", "date": "2026-09-07", "letterboxed": true },
+    { "code": "Dc-Y9oyv0PZ", "type": "reel", "title": "Kids hip-hop: Qeher", "category": "Classes", "date": "2026-09-07", "letterboxed": true },
+    { "code": "Dc-TsLnzEk6", "type": "reel", "title": "Kids hip-hop: Qeher", "category": "Classes", "date": "2026-09-07", "letterboxed": true },
+    { "code": "Dc6nyNqv9om", "type": "reel", "title": "Kids hip-hop class", "category": "Classes", "date": "2026-09-06", "letterboxed": true },
+    { "code": "Dc6kbypvwMQ", "type": "reel", "title": "Kids hip-hop: 90's", "category": "Classes", "date": "2026-09-05", "letterboxed": true },
+    { "code": "Dc35sVxSRuA", "type": "reel", "title": "Kids hip-hop class", "category": "Classes", "date": "2026-09-04", "letterboxed": true }
+  ],
   "gallery": [
     { "photo": "stageSpin", "category": "Performances", "caption": "Solo in motion" },
     { "photo": "classicalStage", "category": "Performances", "caption": "Classical on stage" },
@@ -130,7 +150,7 @@
     { "quote": "Tough, fun and honest training. The audition prep gave me the confidence to go for a reality show.", "who": "Student", "detail": "Freestyle batch" }
   ],
   "faqs": [
-    { "q": "Where are the classes held?", "a": "At Pawar Public School, Hinjewadi Phase 3, Pune. Tap “Get directions” in the contact section for the map." },
+    { "q": "Where are the classes held?", "a": "At Podium 2, Megapolis Splendour Society, Phase 3, Rajiv Gandhi Infotech Park, Hinjawadi, Maharashtra 411057. Tap “Get directions” in the contact section for the map." },
     { "q": "Which dance styles can I learn?", "a": "We offer training in 35+ dance forms. Message us on WhatsApp for the full list and the batches running right now." },
     { "q": "Are beginners welcome?", "a": "Yes. Training starts with a basic dance workout and builds up to advanced dance practice, so you grow at your own pace." },
     { "q": "Who teaches at Dance Yard?", "a": "Mumbai-based professional dancers who have worked with some of Bollywood's biggest choreographers. They travel to Pune specially to teach our students." },

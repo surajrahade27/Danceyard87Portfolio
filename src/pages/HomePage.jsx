@@ -7,6 +7,7 @@ import Events from '../sections/Events'
 import Faq from '../sections/Faq'
 import Gallery from '../sections/Gallery'
 import Hero from '../sections/Hero'
+import Instagram from '../sections/Instagram'
 import Join from '../sections/Join'
 import Learn from '../sections/Learn'
 import Marquee from '../sections/Marquee'
@@ -30,6 +31,7 @@ function HomePage() {
       <Mentors />
       <Choreography />
       <Videos />
+      <Instagram />
       <Gallery />
       <Events />
       <Testimonials />
