@@ -12,6 +12,8 @@ import videoStyles from './Videos.module.css'
 // Each card loads a small Instagram embed, so cards are shown a batch at a time
 const PAGE = 12
 const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/
+// Display flags that change how the embed is cropped (see Instagram.module.css)
+const SHAPES = ['landscape', 'square', 'letterboxed']
 const DATE = new Intl.DateTimeFormat('en-IN', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' })
 
 // Dates typed in the sheet are shown as typed unless they're YYYY-MM-DD
@@ -108,7 +110,7 @@ function PostCard({ post, index }) {
     <li className={`stagger-item reveal-color ${styles.item}`} style={{ '--i': index }}>
       {/* Beside the button, not in it: an iframe can't sit inside a button */}
       <span
-        className={`graded ${styles.thumb} ${post.landscape ? styles.landscape : ''} ${post.letterboxed ? styles.letterboxed : ''}`}
+        className={`graded ${styles.thumb} ${SHAPES.map((shape) => (post[shape] ? styles[shape] : '')).join(' ')}`}
         inert
       >
         <iframe src={instagramEmbed(post.code)} title={post.title} loading="lazy" scrolling="no" />

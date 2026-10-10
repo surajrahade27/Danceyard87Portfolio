@@ -89,6 +89,7 @@ export function postsFromCsv(text) {
         category: value('category') || 'More',
         date: value('date'),
         landscape: display.includes('landscape'),
+        square: display.includes('square'),
         letterboxed: display.includes('letterbox'),
       })
     }
