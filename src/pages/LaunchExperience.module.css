@@ -48,11 +48,13 @@
   justify-content: center;
   align-items: flex-start;
   padding-block: 60px 72px;
+  container-type: inline-size;
   animation: arrive .8s var(--ease-out) both;
 }
 .eyebrow { color: #b5ff63; font-size: .72rem; margin-bottom: 24px; }
 .content h1 {
-  font-size: clamp(3.3rem, 7vw, 7.5rem);
+  /* 12cqi caps the size so "SOMETHING" always fits its box instead of breaking */
+  font-size: min(clamp(3.3rem, 7vw, 7.5rem), 12cqi);
   line-height: 1.04;
   text-transform: uppercase;
   font-weight: 900;
@@ -148,7 +150,7 @@
   .partyPop strong { font-size: .82rem; }
   .content { padding-block: 64px 48px; }
   .live .content { padding-top: 132px; }
-  .content h1 { font-size: clamp(2.1rem, 9.4vw, 4rem); }
+  .content h1 { font-size: min(clamp(2.1rem, 9.4vw, 4rem), 12cqi); }
   .countdown { width: 100%; gap: 10px; margin-top: 36px; }
   .unit { flex: 1; min-width: 0; }
   .digits { font-size: clamp(1.55rem, 6.5vw, 2.7rem); }
