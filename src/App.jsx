@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import CursorFollower from './components/common/CursorFollower'
 import IntroCurtain from './components/common/IntroCurtain'
 import FloatingActions from './components/layout/FloatingActions'
@@ -7,6 +8,7 @@ import VideoProvider from './components/common/VideoProvider'
 import HomePage from './pages/HomePage'
 import NotFoundPage from './pages/NotFoundPage'
 import PrivacyPage from './pages/PrivacyPage'
+import LaunchExperience from './pages/LaunchExperience'
 import { useButtonRipple } from './hooks/useButtonRipple'
 
 // Tiny path-based router; Netlify's _redirects sends every path to index.html.
@@ -17,6 +19,24 @@ const Page = PAGES[path] ?? NotFoundPage
 
 function App() {
   useButtonRipple()
+  const [entered, setEntered] = useState(() => {
+    try {
+      return sessionStorage.getItem('dy-launch-entered') === '1'
+    } catch {
+      return false
+    }
+  })
+
+  if (Page === HomePage && !entered) {
+    return <LaunchExperience onEnter={() => {
+      try {
+        sessionStorage.setItem('dy-launch-entered', '1')
+      } catch {
+        // The visitor can still enter when storage is unavailable.
+      }
+      setEntered(true)
+    }} />
+  }
 
   return (
     <VideoProvider>

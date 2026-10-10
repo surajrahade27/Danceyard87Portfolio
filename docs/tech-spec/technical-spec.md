@@ -112,7 +112,7 @@ Targets are proposed by this spec; "current" figures are from the local producti
 
 ### 3.1 Architecture overview
 
-The site is a **static single-page application**. GitHub Actions builds it with Vite into plain HTML, JS and CSS; Netlify serves those files from its CDN. There is no application server and no database. The only "backend" is Netlify Forms, which stores enquiry submissions and emails the studio.
+The site is a **static single-page application**. GitHub Actions builds it with Vite into plain HTML, JS and CSS; Netlify serves those files from its CDN. There is no application server and no database. The only "backend" is Netlify Forms, which stores enquiry submissions in the dashboard. Email notifications are not configured on the Free plan.
 
 Design principles:
 
@@ -157,7 +157,7 @@ flowchart LR
   visitor -- "font CSS + files" --> fonts
   visitor -- "chat deep link" --> wa
   visitor -. "profile link" .-> ig
-  forms -- "email notification" --> staff
+  staff -- "check Forms inbox" --> forms
   staff -- "reply on WhatsApp" --> visitor
   dev -- "push, pull request" --> repo
   repo --> actions
@@ -209,7 +209,7 @@ flowchart LR
   prod -. "form posts" .-> inbox
 ```
 
-Each Netlify deploy is atomic and immutable: a new production deploy switches over in one step, and any earlier deploy can be re-published for an instant rollback (§6.4). Dev and UAT are fixed aliases on the same site, so they share its forms inbox: test enquiries sent from Dev or UAT reach the studio's notification email too.
+Each Netlify deploy is atomic and immutable: a new production deploy switches over in one step, and any earlier deploy can be re-published for an instant rollback (§6.4). Dev and UAT are fixed aliases on the same site, so test enquiries sent from Dev or UAT appear in the same Forms inbox as live enquiries.
 
 ### 3.5 CI/CD pipeline
 
@@ -299,7 +299,7 @@ flowchart TD
   ok -- "no, network or server error" --> fallback["Error message<br/>with WhatsApp link"]
   fallback --> wa
   thanks -. optional .-> wa
-  thanks --> lead[("Netlify Forms inbox<br/>+ email to staff")]
+  thanks --> lead[("Netlify Forms inbox<br/>checked by staff")]
   wa --> chat[("Dance Yard WhatsApp")]
   lead --> follow["Staff reply on WhatsApp<br/>with batches and fees"]
   chat --> follow
@@ -697,7 +697,7 @@ sequenceDiagram
       NF-->>J: 2xx
       J->>J: status = sent, form.reset()
       J-->>U: thank-you panel + Continue on WhatsApp link
-      NF->>S: email notification (set up in Netlify)
+      S->>NF: check Forms inbox for new enquiries
       S->>U: reply on WhatsApp with batches and fees
     else network error or non-2xx
       NF-->>J: error
@@ -1112,7 +1112,7 @@ Target: the last two versions of Chrome, Edge, Firefox and Safari (desktop and i
 | `production` environment with required reviewers | GitHub → Settings → Environments | Production approval gate |
 | Branch protection on `main`, requiring check "Lint, test & build" | GitHub → Settings → Branches | No merging red PRs |
 | Form detection: on | Netlify → Site configuration → Forms | Registers the `enquiry` form |
-| Form notifications (email to the studio) | Netlify → Site configuration → Forms → Notifications | Staff get each enquiry |
+| Form inbox checks | Netlify → Forms → Submissions | Staff check for enquiries; the account currently requires Pro for email notifications to `danceyard87@gmail.com` |
 | Custom domain + HTTPS | Netlify → Domain management | TBD (questionnaire §21) |
 | Node version | `.nvmrc` | Same version locally and in CI |
 
@@ -1139,7 +1139,7 @@ The app has **no runtime environment variables**. Everything it needs is in the 
 |---|---|---|
 | Failed CI / deploy runs | GitHub Actions email notifications | Developer |
 | Deploy status | Netlify Deploys log (optional email/Slack notifications) | Developer |
-| New enquiries | Netlify Forms email notification | Studio staff |
+| New enquiries | Netlify Forms inbox (manual check; no email alert on Free plan) | Studio staff |
 | Form quota and bandwidth | Netlify usage page – check the current Free plan limits | Developer, monthly |
 | Uptime | Optional free external uptime check on the homepage | Developer |
 | Real-user performance | Not set up – decide with analytics (questionnaire §23) | – |
@@ -1194,7 +1194,7 @@ Wiring: add `"test": "vitest"` to `package.json` and replace the `TODO` lines in
 | 1 | P1 – before launch | Sample content: Unsplash photos, third-party YouTube videos, placeholder testimonials, draft privacy policy | Rights and trust issues; misleading reviews | Replace with Dance Yard's own content, with consent; remove credit/"sample" notes |
 | 2 | P1 | No error boundary; a bad photo key blanks the whole site | Outage from a content typo | Add data-integrity test (R1–R7) in CI and a top-level error boundary with a WhatsApp fallback |
 | 3 | P1 | Hidden form in `index.html` must match `Join.jsx` by hand | New fields silently dropped by Netlify | Form contract test |
-| 4 | P1 | Form notifications and quota not documented as configured | Missed enquiries | Turn on email notifications to the studio; check Free-plan form limits |
+| 4 | P1 | Netlify account requires Pro for form email notifications | Missed enquiries without manual checks | Check the Forms inbox regularly; choose a privacy-appropriate no-cost notification service only after approval and a deployed test |
 | 5 | P1 | Phone number +91 63965 76838 – takes calls? | Dead "Call now" button | Confirm with client; remove `tel:` links if not |
 | 6 | P1 | Children's data in the form | Legal exposure | Legal review; consent wording/checkbox; retention policy |
 | 7 | P1 | No `og:image`, canonical, sitemap; no custom domain | Poor link previews and indexing | Add once logo and domain arrive |
@@ -1205,7 +1205,7 @@ Wiring: add `"test": "vitest"` to `package.json` and replace the `TODO` lines in
 | 12 | P2 | Cross-page hash links (e.g. `/privacy` → `/#join`) rely on the browser finding the section after React renders | Visitor lands at the top instead of the form | Test on Safari/Chrome; if needed, scroll to `location.hash` after first render |
 | 13 | P2 | GitHub Actions pinned to tags, no Dependabot | Supply chain | Pin to SHAs; enable Dependabot for npm and Actions |
 | 14 | P3 | Analytics undecided | No conversion data | Decide (questionnaire §23); if added, update CSP, privacy policy and consent |
-| 15 | P3 | Dev and UAT share the live site's forms inbox | Test enquiries email the studio | Mark test submissions clearly (e.g. name "TEST"), or move Dev/UAT to their own Netlify sites |
+| 15 | P3 | Dev and UAT share the live site's forms inbox | Test enquiries mix with live submissions | Mark test submissions clearly (e.g. name "TEST"), or move Dev/UAT to their own Netlify sites |
 | 16 | P3 | Terms & Conditions page | – | Add if the client wants one |
 
 ---
@@ -1216,15 +1216,14 @@ Technical decisions waiting on the client (see [client profile §10](../function
 
 1. Final domain name, and who owns the domain and the Netlify account.
 2. Who owns the GitHub repository after launch, and who approves production deploys?
-3. Email address(es) for enquiry notifications.
-4. Does +91 63965 76838 take calls?
-5. Logo files (SVG/PNG) – needed for header, favicon set and `og:image`.
-6. Analytics and tracking: none, Google Analytics, Search Console, Meta Pixel?
-7. Real photos and videos, with publishing consent (and parental consent for minors).
-8. Is a Terms & Conditions page needed?
-9. Who on the client side reviews UAT and approves it for Live?
-10. Should the site showcase the Dance Yard app, and when?
-11. Will staff need to edit content themselves (CMS phase)?
+3. Does +91 63965 76838 take calls?
+4. Logo files (SVG/PNG) – needed for header, favicon set and `og:image`.
+5. Analytics and tracking: none, Google Analytics, Search Console, Meta Pixel?
+6. Real photos and videos, with publishing consent (and parental consent for minors).
+7. Is a Terms & Conditions page needed?
+8. Who on the client side reviews UAT and approves it for Live?
+9. Should the site showcase the Dance Yard app, and when?
+10. Will staff need to edit content themselves (CMS phase)?
 
 ---
 

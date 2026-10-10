@@ -36,7 +36,11 @@ npm run dev    # http://localhost:5173
 
 Both workflows need the repo secrets `NETLIFY_AUTH_TOKEN` and `NETLIFY_SITE_ID`. Turn on **Required reviewers** for the `uat` and `production` environments in GitHub → Settings → Environments; without it, UAT and Live deploy straight after Dev.
 
-The enquiry form uses Netlify Forms: turn on form detection in the Netlify site settings. Netlify registers the form from the hidden copy in `index.html`, so keep its field names in sync with `src/sections/Join.jsx`.
+The enquiry form uses Netlify Forms. In the Netlify site dashboard, enable **Forms → Form detection**, then deploy so Netlify registers the hidden `enquiry` form in `index.html`. Keep its field names in sync with `src/sections/Join.jsx`. Submit a test enquiry on the deployed site and confirm it appears in **Forms → Submissions**. The Vite dev server cannot deliver Netlify Forms submissions.
+
+**Email alerts are not configured.** The site's Netlify dashboard requires Pro to set up form email notifications, so Free-plan enquiries must be checked in the Forms inbox manually. `danceyard87@gmail.com` is the intended notification recipient if a no-cost, privacy-appropriate delivery method is approved later. Do not assume an enquiry generated an email.
+
+Netlify's credit-based plans currently include free, unlimited Forms; the Free hosting plan still has overall usage limits. Legacy Netlify plans have separate Forms limits. Check the site's actual plan and usage in the Netlify dashboard before launch.
 
 ## Docs
 
