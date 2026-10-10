@@ -59,13 +59,14 @@
   overflow-wrap: anywhere;
 }
 .content h1 span { color: #b5ff63; }
-.lead { max-width: 53ch; margin-top: 26px; font-size: clamp(1rem, 1.6vw, 1.24rem); line-height: 1.65; color: #e0e6dd; }
+.lead { max-width: 53ch; margin-top: 26px; text-wrap: pretty; font-size: clamp(1rem, 1.6vw, 1.24rem); line-height: 1.65; color: #e0e6dd; }
 .countdown { display: flex; gap: clamp(14px, 3vw, 48px); margin-top: 48px; font-variant-numeric: tabular-nums; }
 .unit { min-width: clamp(60px, 10vw, 120px); display: flex; flex-direction: column; border-top: 2px solid #b5ff63; padding-top: 12px; }
 .digits { font-family: var(--font-display); font-size: clamp(2rem, 5vw, 4.4rem); line-height: 1.2; font-weight: 700; }
 .unitLabel { margin-top: 8px; font-size: .66rem; color: #d0d8ca; }
 .date { margin-top: 28px; font-size: .72rem; color: #e0e6dd; }
-.date span { color: #b5ff63; margin-inline: 8px; }
+.date span { white-space: nowrap; }
+.date .dateSep { color: #b5ff63; margin-inline: 8px; }
 .footer { position: relative; z-index: 1; font-size: .63rem; color: #d0d8ca; }
 .footerRight { display: flex; gap: 16px; align-items: center; }
 .footerRight > span { color: #b5ff63; font-size: 1.1rem; }

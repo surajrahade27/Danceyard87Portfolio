@@ -5,7 +5,7 @@ import { photo, photoSrcSet, photoUrl } from '../utils/media'
 import { reducedMotion } from '../utils/motion'
 import styles from './LaunchExperience.module.css'
 
-const LAUNCH_AT = Date.parse('2026-10-11T13:00:00+05:30')
+const LAUNCH_AT = Date.parse('2026-10-11T16:00:00+05:30')
 
 const stage = photo('crewStage')
 const units = [
@@ -100,7 +100,7 @@ function LaunchExperience({ onEnter }) {
           ) : (
             <>
               <h1>Something<br /><span>is moving.</span></h1>
-              <p className={styles.lead}>A new home for rhythm, expression and everything that moves you. We open 11 October.</p>
+              <p className={styles.lead}>A new home for rhythm, expression and everything that moves you. We open 11&nbsp;October.</p>
               <div className={styles.countdown} role="timer" aria-label="Time until Dance Yard Studio launches">
                 {countdown.map(({ label, value }) => (
                   <div className={styles.unit} key={label}>
@@ -109,7 +109,7 @@ function LaunchExperience({ onEnter }) {
                   </div>
                 ))}
               </div>
-              <p className={styles.date}>Sunday, 11 October 2026 <span aria-hidden="true">/</span> 1:00 PM IST</p>
+              <p className={styles.date}><span>Sunday, 11 October 2026</span> <span className={styles.dateSep} aria-hidden="true">/</span> <span>4:00 PM IST</span></p>
             </>
           )}
         </div>
