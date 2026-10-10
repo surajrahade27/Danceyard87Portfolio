@@ -54,6 +54,14 @@
   --shift: -61.11%;
 }
 
+/* A 1:1 picture: laid out at 2.5 times the card's width so that, still at
+   half scale, it fills the card's height; then centred.
+   shift = (1 − 2.5 × 0.5) / 2 */
+.square {
+  --width: 250%;
+  --shift: -12.5%;
+}
+
 /* Reels Instagram lets play here show as 9:16 video with black bars inside
    the 4:5 frame. Zoom until the video fills the card's width, then centre.
    scale = 0.5 × (4/5) / (9/16), shift = lift = (1 − 2 × scale) / 2 */
