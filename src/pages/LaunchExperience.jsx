@@ -5,7 +5,7 @@ import { photo, photoSrcSet, photoUrl } from '../utils/media'
 import { reducedMotion } from '../utils/motion'
 import styles from './LaunchExperience.module.css'
 
-const LAUNCH_AT = Date.parse('2026-10-11T19:35:00+05:30')
+const LAUNCH_AT = Date.parse('2026-10-11T19:40:00+05:30')
 
 const stage = photo('crewStage')
 const units = [
@@ -109,7 +109,7 @@ function LaunchExperience({ onEnter }) {
                   </div>
                 ))}
               </div>
-              <p className={styles.date}><span>Sunday, 11 October 2026</span> <span className={styles.dateSep} aria-hidden="true">/</span> <span>7:35 PM IST</span></p>
+              <p className={styles.date}><span>Sunday, 11 October 2026</span> <span className={styles.dateSep} aria-hidden="true">/</span> <span>7:40 PM IST</span></p>
             </>
           )}
         </div>
