@@ -7,7 +7,7 @@ import { photo } from '../utils/media'
 import styles from './About.module.css'
 
 const { about } = site
-const [mainPhoto, sidePhoto] = about.photos.map(photo)
+const [sidePhoto] = about.photos.slice(1).map(photo)
 
 function About() {
   return (
@@ -15,7 +15,15 @@ function About() {
       <div className={`container ${styles.grid}`}>
         <div className={styles.media}>
           <Reveal variant="clip" className={styles.main}>
-            <GradedImage photo={mainPhoto} sizes="(min-width: 960px) 40vw, 90vw" className="parallax" />
+            <div className={styles.portraitFallback} aria-hidden="true">ND</div>
+            <img
+              src={about.owner.photo}
+              alt={`Portrait of ${about.owner.name}`}
+              className={styles.portrait}
+              onError={(event) => { event.currentTarget.hidden = true }}
+              loading="lazy"
+              decoding="async"
+            />
           </Reveal>
           <Reveal variant="clip" delay={250} className={styles.side}>
             <GradedImage photo={sidePhoto} sizes="(min-width: 960px) 18vw, 40vw" />
@@ -46,14 +54,15 @@ function About() {
           <SectionHeading
             compact
             id="about-title"
-            kicker="About us"
+            kicker="Meet the Founder and Dance Visionary"
             title={
               <>
-                Where passion <span className="neon">turns pro</span>
+                {about.owner.name} <span className="neon">{about.owner.role}</span>
               </>
             }
           />
-          {about.paragraphs.map((text, i) => (
+          <p className={styles.experience}>{about.owner.experience} in dance</p>
+          {about.owner.paragraphs.map((text, i) => (
             <Reveal as="p" key={i} delay={i * 100} className={styles.text}>
               {text}
             </Reveal>

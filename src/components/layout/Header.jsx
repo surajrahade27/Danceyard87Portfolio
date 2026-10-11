@@ -13,7 +13,6 @@ const NAV = [
   { id: 'classes', label: 'Classes' },
   { id: 'opportunities', label: 'Opportunities' },
   { id: 'choreography', label: 'Choreography' },
-  { id: 'videos', label: 'Videos' },
   { id: 'gallery', label: 'Gallery' },
   { id: 'contact', label: 'Contact' },
 ]

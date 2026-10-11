@@ -15,18 +15,27 @@ const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/
 // Display flags that change how the embed is cropped (see Instagram.module.css)
 const SHAPES = ['landscape', 'square', 'letterboxed']
 const DATE = new Intl.DateTimeFormat('en-IN', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' })
+const POSTER = /^posters?$/i
+// The gallery's tabs: reels, photos in the "Posters" category, and every other photo
+const TABS = [
+  { label: 'Reels', has: (post) => post.type === 'reel' },
+  { label: 'Posters', has: (post) => post.type === 'photo' && POSTER.test(post.category) },
+  { label: 'Photos', has: (post) => post.type === 'photo' && !POSTER.test(post.category) },
+]
 
 // Dates typed in the sheet are shown as typed unless they're YYYY-MM-DD
 function formatDate(date) {
   return ISO_DATE.test(date) ? DATE.format(new Date(date)) : date
 }
 
-// Dance Yard's Instagram posts, from the studio's Google Sheet when one is set
-// (danceyard.json → instagramSheet), otherwise from danceyard.json → instagram.
-// Clicking a card opens the post in Instagram's own embed player inside the
-// shared modal, so nothing is stored on the site.
+// The gallery: Dance Yard's Instagram posts, from the studio's Google Sheet when
+// one is set (danceyard.json → instagramSheet), otherwise from danceyard.json →
+// instagram. Split into Reels, Posters and Photos tabs, each with its own
+// category filters. Clicking a card opens the post in Instagram's own embed
+// player inside the shared modal, so nothing is stored on the site.
 function Instagram() {
   const [posts, setPosts] = useState(site.instagramSheet ? null : site.instagram)
+  const [tab, setTab] = useState(TABS[0].label)
   const [filter, setFilter] = useState('All')
   const [limit, setLimit] = useState(PAGE)
 
@@ -42,9 +51,19 @@ function Instagram() {
     }
   }, [])
 
-  const categories = posts ? ['All', ...new Set(posts.map((post) => post.category))] : []
-  const matching = posts?.filter((post) => filter === 'All' || post.category === filter) ?? []
+  // Empty tabs are left out; if the chosen one is empty, the first left is shown
+  const tabs = posts ? TABS.map((t) => ({ ...t, posts: posts.filter(t.has) })).filter((t) => t.posts.length) : []
+  const current = tabs.find((t) => t.label === tab) ?? tabs[0]
+  const inTab = current?.posts ?? []
+  const categories = ['All', ...new Set(inTab.map((post) => post.category))]
+  const matching = inTab.filter((post) => filter === 'All' || post.category === filter)
   const more = Math.min(PAGE, matching.length - limit)
+
+  const openTab = (label) => {
+    setTab(label)
+    setFilter('All')
+    setLimit(PAGE)
+  }
 
   const choose = (category) => {
     setFilter(category)
@@ -52,21 +71,38 @@ function Instagram() {
   }
 
   return (
-    <section id="instagram" className="section section-raised" aria-labelledby="instagram-title">
+    <section id="gallery" className="section section-raised" aria-labelledby="gallery-title">
       <div className="container">
         <SectionHeading
-          id="instagram-title"
-          kicker="Instagram"
+          id="gallery-title"
+          kicker="Gallery"
           title={
             <>
-              Fresh from the <span className="neon">feed</span>
+              Moments in <span className="neon">motion</span>
             </>
           }
           lead={site.instagramNote}
         />
 
+        {tabs.length > 1 && (
+          <div className={styles.tabs} role="group" aria-label="Show reels, posters or photos">
+            {tabs.map((t) => (
+              <button
+                key={t.label}
+                type="button"
+                className={styles.tab}
+                aria-pressed={t === current}
+                onClick={() => openTab(t.label)}
+              >
+                {t.label}
+                <span className={styles.count}>{t.posts.length}</span>
+              </button>
+            ))}
+          </div>
+        )}
+
         {categories.length > 2 && (
-          <div className="chips" role="group" aria-label="Filter Instagram posts">
+          <div className="chips" role="group" aria-label={`Filter ${current.label.toLowerCase()}`}>
             {categories.map((c) => (
               <button key={c} type="button" className="chip" aria-pressed={filter === c} onClick={() => choose(c)}>
                 {c}
@@ -76,7 +112,7 @@ function Instagram() {
         )}
 
         <Reveal>
-          <ul key={filter} className={styles.grid} aria-busy={!posts}>
+          <ul key={`${current?.label}-${filter}`} className={styles.grid} aria-busy={!posts}>
             {posts
               ? matching.slice(0, limit).map((post, i) => <PostCard key={post.code} post={post} index={i % PAGE} />)
               : Array.from({ length: 4 }, (_, i) => <li key={i} className={styles.item} aria-hidden="true" />)}
@@ -122,7 +158,7 @@ function PostCard({ post, index }) {
         onClick={() => playVideo({ ...post, platform: 'instagram' })}
         aria-label={`Open ${post.type}: ${post.title}${date ? `, ${date}` : ''}`}
       >
-        <span className={styles.type}>{reel ? 'Reel' : 'Photo'}</span>
+        <span className={styles.type}>{reel ? 'Reel' : POSTER.test(post.category) ? 'Poster' : 'Photo'}</span>
         <span className={styles.badge} aria-hidden="true">
           <Icon name="instagram" size={18} />
         </span>

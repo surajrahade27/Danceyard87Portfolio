@@ -26,7 +26,7 @@
     "eyebrow": "Limited admission · Hinjewadi Phase 3, Pune",
     "lead": "A Mumbai-based premium dance academy in Pune. Train with professional dancers who have worked with Bollywood's biggest choreographers, and get real chances on film sets, fashion runways and reality-show stages.",
     "slides": ["stageSpin", "crewStage", "ensembleStage", "breaking"],
-    "showreel": "fRh_vgS2dFE"
+    "showreel": "DXQ5Aj3Dxc4"
   },
   "stats": [
     { "value": "20+", "label": "Years in the dance industry" },
@@ -38,6 +38,16 @@
     ["Bollywood opportunities", "Camera training", "Fashion shows", "Reality show prep", "Mumbai mentors", "Limited admission"]
   ],
   "about": {
+    "owner": {
+      "name": "Neel Deshmukh",
+      "role": "Choreographer & Mentor",
+      "experience": "20+ years",
+      "photo": "/images/neel-deshmukh.jpg",
+      "paragraphs": [
+        "With more than 20 years of experience in the dance industry, Neel Deshmukh leads Dance Yard with a simple belief: dance can build confidence, discipline and a lasting sense of self-expression.",
+        "At Dance Yard, students are encouraged to develop strong foundations, explore their own style and grow through consistent practice. From a first class to a stage-ready performance, Neel is committed to creating a welcoming place where every dancer can learn, progress and feel proud of how far they have come."
+      ]
+    },
     "paragraphs": [
       "With over 20 years of experience in the dance industry, Dance Yard Studio has been passionately training and inspiring dancers to achieve their dreams. We offer training in 35+ dance forms, helping students explore their talent and grow with confidence.",
       "We are proud to have sent 100+ dancers to Bollywood, many of whom are currently working in the industry."
@@ -104,7 +114,7 @@
     { "id": "h_D3VFfhvs4", "title": "Michael Jackson – Smooth Criminal", "category": "Performance" }
   ],
   "instagramSheet": "",
-  "instagramNote": "Latest posts from @danceyard87, played in Instagram's own player. Instagram lets some reels play here; the rest show a \"Watch on Instagram\" button.",
+  "instagramNote": "Reels, posters and photos from @danceyard87, played in Instagram's own player. Instagram lets some reels play here; the rest show a \"Watch on Instagram\" button.",
   "instagram": [
     {"code": "DdvaMFtDXHO", "type": "photo", "title": "Hip-hop classes", "category": "Posters", "date": "2026-09-26"},
     {"code": "DdjW2Omso2b", "type": "reel", "title": "Little stars at Splendour Ganeshotsav", "category": "Ganeshotsav", "date": "2026-09-21"},

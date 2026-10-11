@@ -169,6 +169,8 @@ ol {
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--accent);
+  /* Long kickers split into even lines on phones, no word left alone */
+  text-wrap: balance;
 }
 
 .kicker::before {

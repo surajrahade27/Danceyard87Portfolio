@@ -574,7 +574,7 @@ erDiagram
 | `name`, `shortName`, `positioning` | string | Footer, Contact, Privacy | |
 | `location` | `{ venue, street, locality, area, city, region, postalCode, mapQuery, mapUrl }` | `utils/contact`, Contact | `mapQuery` drives the embedded map; `mapUrl` (Google Maps share link) is the "Get directions" link; `area` + `city` are the short form used in copy |
 | `contact` | see ER diagram | `utils/contact`, Header, Footer, Contact | `instagram` is optional – UI hides Instagram links when empty |
-| `hero` | `{ eyebrow, lead, slides: photoKey[], showreel: videoId }` | Hero | First slide loads eagerly |
+| `hero` | `{ eyebrow, lead, slides: photoKey[], showreel: instagramCode }` | Hero | First slide loads eagerly; the showreel opens that Instagram reel in the video modal |
 | `stats` | `{ value, label }[]` | Hero | `value` like `"20+"`; `CountUp` animates the number part |
 | `marquee` | `string[][]` (two rows) | Marquee | |
 | `about` | `{ paragraphs[], mission, photos: [main, side] }` | About | |
@@ -598,7 +598,7 @@ Nothing enforces these today. §7 proposes a check that runs in CI.
 | # | Rule | What happens if broken |
 |---|---|---|
 | R1 | Every photo key (`hero.slides`, `about.photos`, `programs[].photo`, `opportunities[].photo`, `mentors.photo`, `choreography.photo`, `gallery[].photo`, `events[].photo`) exists in `photos.json` | **Whole page goes blank** – `GradedImage` reads `photo.id` of `undefined` and there is no error boundary |
-| R2 | `hero.showreel` matches a `videos[].id` | "Watch showreel" silently does nothing |
+| R2 | `hero.showreel` is the code of a public Instagram reel, ideally one listed in `instagram` | "Watch showreel" opens an empty or "Watch on Instagram" embed; unlisted codes get a generic title |
 | R3 | Values used as React keys are unique within their list: `programs[].name`, `why/learn/opportunities/services/events[].title`, `faqs[].q`, `testimonials[].quote`, `videos[].id`, gallery photo ids | Duplicate-key warnings; wrong items may update |
 | R4 | `icon` values exist in `Icon.jsx` | Empty icon (no crash) |
 | R5 | `contact.whatsapp` is digits only, with country code (`91…`) | Broken WhatsApp links |
@@ -1265,7 +1265,9 @@ All edits are in `src/data/`. Run `npm run dev` and check the change before open
 
 **Add a gallery photo** – add it to `photos.json`, then add `{ "photo": "<key>", "category": "…", "caption": "…" }` to `gallery`. A new category creates a new filter chip.
 
-**Add a video** – add `{ "id": "<YouTube id>", "title": "…", "category": "…" }` to `videos`. The id is the `v=` part of the YouTube URL. To make it the hero showreel, set `hero.showreel` to the same id.
+**Add a video** – add `{ "id": "<YouTube id>", "title": "…", "category": "…" }` to `videos`. The id is the `v=` part of the YouTube URL.
+
+**Change the hero showreel** – set `hero.showreel` to an Instagram reel code (the part after `/reel/` in its link). Pick one that plays on the site rather than showing "Watch on Instagram".
 
 **Add an event** – add `{ "type", "title", "when", "text", "photo" }` to `events`.
 

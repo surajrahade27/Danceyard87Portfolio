@@ -1,3 +1,66 @@
+/* Reels / Posters / Photos switch above the category chips. Full width on
+   phones so the three tabs share the row evenly. */
+.tabs {
+  display: flex;
+  gap: var(--space-1);
+  max-width: 100%;
+  margin-bottom: var(--space-6);
+  padding: var(--space-1);
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+}
+
+.tab {
+  display: inline-flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--muted);
+  cursor: pointer;
+  transition:
+    background 0.3s,
+    color 0.3s,
+    box-shadow 0.3s;
+}
+
+@media (hover: hover) {
+  .tab:hover {
+    color: var(--text);
+  }
+}
+
+.tab[aria-pressed='true'] {
+  background: var(--accent);
+  color: var(--on-accent);
+  box-shadow: var(--glow);
+}
+
+.count {
+  font-size: 0.8rem;
+  font-weight: 500;
+  opacity: 0.75;
+}
+
+@media (min-width: 640px) {
+  .tabs {
+    display: inline-flex;
+  }
+
+  .tab {
+    flex: none;
+    padding: 10px 26px;
+    font-size: 1rem;
+  }
+}
+
 /* Play button and caption styles come from Videos.module.css */
 .grid {
   display: grid;

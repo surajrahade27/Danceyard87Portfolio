@@ -10,7 +10,6 @@ const LINKS = [
   { id: 'classes', label: 'Classes' },
   { id: 'opportunities', label: 'Opportunities' },
   { id: 'choreography', label: 'Choreography' },
-  { id: 'videos', label: 'Videos' },
   { id: 'gallery', label: 'Gallery' },
   { id: 'events', label: 'Events' },
   { id: 'faq', label: 'FAQ' },

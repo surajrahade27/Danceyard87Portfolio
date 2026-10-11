@@ -5,7 +5,6 @@ import Choreography from '../sections/Choreography'
 import Contact from '../sections/Contact'
 import Events from '../sections/Events'
 import Faq from '../sections/Faq'
-import Gallery from '../sections/Gallery'
 import Hero from '../sections/Hero'
 import Instagram from '../sections/Instagram'
 import Join from '../sections/Join'
@@ -15,9 +14,10 @@ import Mentors from '../sections/Mentors'
 import Opportunities from '../sections/Opportunities'
 import Programs from '../sections/Programs'
 import Testimonials from '../sections/Testimonials'
-import Videos from '../sections/Videos'
 import WhyUs from '../sections/WhyUs'
 
+// Videos (sample YouTube clips) and Gallery (sample Unsplash photos) are hidden
+// until Dance Yard's own are ready; the Instagram feed is the gallery for now.
 function HomePage() {
   return (
     <>
@@ -30,9 +30,7 @@ function HomePage() {
       <Opportunities />
       <Mentors />
       <Choreography />
-      <Videos />
       <Instagram />
-      <Gallery />
       <Events />
       <Testimonials />
       <AdmissionBanner />

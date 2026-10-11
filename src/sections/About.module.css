@@ -12,26 +12,58 @@
 }
 
 .media {
+  /* The portrait fills this box's content width (100cqw), so its arch is a
+     half-circle of radius 50cqw. The neon frame sits --gap outside it,
+     following the same curve. */
+  --gap: 14px;
+
+  container-type: inline-size;
   position: relative;
   isolation: isolate;
   padding: 0 12% 12% 0;
 }
 
+/* Positioned so the absolute portrait stays inside the rounded clip */
 .main {
+  position: relative;
   aspect-ratio: 4 / 5;
   overflow: hidden;
-  border-radius: var(--radius-lg);
+  border-radius: 50cqw 50cqw var(--radius-lg) var(--radius-lg);
+  box-shadow: var(--shadow-lg);
 }
 
 .main > * {
   height: 100%;
 }
 
+.portrait {
+  position: absolute;
+  /* Taller than the frame and pinned to the top: the frame shows the top
+     87% of the photo, ending just above the shoes (they start ~92% down) */
+  inset: 0 0 auto;
+  width: 100%;
+  height: 115%;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.portraitFallback {
+  display: grid;
+  height: 100%;
+  place-items: center;
+  background: radial-gradient(ellipse at 50% 38%, rgb(var(--accent-rgb) / 22%), transparent 52%), var(--surface);
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-size: clamp(6rem, 16vw, 13rem);
+  line-height: 1;
+}
+
+/* Small enough to sit in the corner without covering the owner */
 .side {
   position: absolute;
   right: 0;
   bottom: 0;
-  width: 46%;
+  width: 32%;
   aspect-ratio: 3 / 4;
   overflow: hidden;
   border: 6px solid var(--bg);
@@ -43,14 +75,19 @@
   height: 100%;
 }
 
-/* Neon frame offset behind the main photo */
+/* Neon arch framing the portrait with an even gap all round */
 .media::before {
   content: '';
   position: absolute;
-  inset: 24px 8% 8% -24px;
+  top: calc(-1 * var(--gap));
+  left: calc(-1 * var(--gap));
   z-index: -1;
+  width: calc(100cqw + 2 * var(--gap));
+  height: calc(125cqw + 2 * var(--gap));
   border: 2px solid var(--accent);
-  border-radius: var(--radius-lg);
+  border-radius:
+    calc(50cqw + var(--gap)) calc(50cqw + var(--gap)) calc(var(--radius-lg) + var(--gap))
+    calc(var(--radius-lg) + var(--gap));
   box-shadow: var(--glow);
 }
 
@@ -119,6 +156,14 @@
   margin-bottom: var(--space-4);
   font-size: 1.05rem;
   color: var(--muted);
+}
+
+.experience {
+  margin: 0 0 var(--space-4);
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
 }
 
 .mission {

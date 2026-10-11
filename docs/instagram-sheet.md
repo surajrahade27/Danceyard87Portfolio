@@ -1,6 +1,6 @@
 # Adding Instagram posts to the website
 
-The website's Instagram section reads its list of posts from a Google Sheet.
+The website's Gallery (its Instagram section) reads its list of posts from a Google Sheet.
 To show a new post, paste its link into the sheet. The website updates by
 itself within about 5 minutes. No code changes, no deploys.
 
@@ -39,7 +39,7 @@ work. The other columns in that row then apply to all of them.
 |---|---|---|
 | `link` | Yes | The Instagram post or reel link |
 | `title` | No | Text on the card. Empty: "Instagram reel" or "Instagram post" |
-| `category` | No | Groups posts under the filter buttons, for example *Classes*, *Events*. A new name makes a new button. Empty: *More* |
+| `category` | No | Groups posts under the filter buttons, for example *Classes*, *Events*. A new name makes a new button. Photos with the category *Posters* go in the gallery's Posters tab, other photos in Photos, and videos in Reels. Empty: *More* |
 | `type` | No | `reel` or `photo`. Only needed if a video's link has `/p/` instead of `/reel/` |
 | `date` | No | `2026-10-07` shows as "7 Oct 2026". Anything else shows exactly as typed |
 | `display` | No | `letterboxed` or `landscape`, see below |

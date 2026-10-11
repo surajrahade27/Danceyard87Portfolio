@@ -14,7 +14,14 @@ import styles from './Hero.module.css'
 
 const SLIDE_MS = 6000
 const slides = site.hero.slides.map(photo)
-const showreel = site.videos.find((v) => v.id === site.hero.showreel)
+// An Instagram reel (code in hero.showreel), titled from the matching post if listed
+const showreel = {
+  title: 'Dance Yard showreel',
+  category: 'Showreel',
+  ...site.instagram.find((post) => post.code === site.hero.showreel),
+  code: site.hero.showreel,
+  platform: 'instagram',
+}
 
 function Hero() {
   const playVideo = useVideoPlayer()
