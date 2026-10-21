@@ -25,6 +25,7 @@ const credits = [...new Map(allPhotos.map((p) => [p.credit, p])).values()]
 
 function Footer() {
   const { contact } = site
+  const { developer } = site.footer
 
   return (
     <footer className={styles.footer}>
@@ -105,6 +106,14 @@ function Footer() {
           <a href="/privacy">Privacy policy</a>
           <span>Sample videos from YouTube</span>
           <span>{VERSION}</span>
+        </p>
+        <p className={styles.madeBy}>
+          Designed & developed by{' '}
+          <a href={developer.url} target="_blank" rel="noreferrer">
+            {developer.name}
+            <Icon name="linkedin" size={14} />
+            <span className="visually-hidden"> on LinkedIn (opens in a new tab)</span>
+          </a>
         </p>
       </div>
 

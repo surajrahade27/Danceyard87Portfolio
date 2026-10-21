@@ -1,0 +1,8 @@
+/* TEAM */
+Design & development: Suraj Rahade
+LinkedIn: https://www.linkedin.com/in/suraj-rahade-54819019a/
+
+/* SITE */
+Client: Dance Yard Studio, Hinjewadi Phase 3, Pune
+Built with: React, Vite
+Hosting: Netlify

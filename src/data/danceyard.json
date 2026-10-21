@@ -252,6 +252,10 @@
     { "q": "How do I join?", "a": "Fill in the enquiry form on this page or message us on WhatsApp. Admissions are limited, so book early." }
   ],
   "footer": {
-    "blurb": "Mumbai-based premium dance academy in Hinjewadi Phase 3, Pune. Dance classes, workshops, and photo and video shoots."
+    "blurb": "Mumbai-based premium dance academy in Hinjewadi Phase 3, Pune. Dance classes, workshops, and photo and video shoots.",
+    "developer": {
+      "name": "Suraj Rahade",
+      "url": "https://www.linkedin.com/in/suraj-rahade-54819019a/"
+    }
   }
 }
