@@ -87,6 +87,12 @@ function Footer() {
               <Icon name="phone" size={18} />
               <a href={phoneLink}>{contact.phoneDisplay}</a>
             </li>
+            <li>
+              <Icon name="star" size={18} />
+              <a href={site.googleReview.url} target="_blank" rel="noreferrer">
+                Review us on Google
+              </a>
+            </li>
           </ul>
         </div>
       </div>

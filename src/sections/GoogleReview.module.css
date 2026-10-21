@@ -1,0 +1,322 @@
+.panel {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  gap: var(--space-12);
+  max-width: 1040px;
+  margin: var(--space-16) auto 0;
+  padding: var(--space-12) var(--space-6);
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background:
+    radial-gradient(circle at 0% 0%, rgb(var(--accent-rgb) / 16%), transparent 45%),
+    radial-gradient(circle at 100% 100%, rgb(var(--accent-2-rgb) / 18%), transparent 50%),
+    var(--surface);
+  box-shadow: var(--shadow-lg);
+  text-align: center;
+}
+
+@media (min-width: 900px) {
+  .panel {
+    grid-template-columns: 1.15fr 0.85fr;
+    align-items: center;
+    padding: var(--space-16);
+    text-align: left;
+  }
+}
+
+/* Animated neon border, as on the enquiry form */
+.panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  padding: 1px;
+  border-radius: inherit;
+  background: conic-gradient(
+    from var(--angle, 0deg),
+    var(--accent),
+    transparent 30%,
+    var(--accent-2) 55%,
+    transparent 80%,
+    var(--accent)
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box exclude,
+    linear-gradient(#000 0 0);
+  pointer-events: none;
+  animation: border-spin 6s linear infinite;
+}
+
+@property --angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes border-spin {
+  to {
+    --angle: 360deg;
+  }
+}
+
+.sparkles {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+/* ── Copy ──────────────────────────────────────────────── */
+.copy {
+  display: grid;
+  justify-items: center;
+}
+
+@media (min-width: 900px) {
+  .copy {
+    justify-items: start;
+  }
+}
+
+.stars {
+  display: inline-flex;
+  gap: 6px;
+  color: var(--accent-4);
+}
+
+.stars svg {
+  filter: drop-shadow(0 0 8px rgb(var(--accent-4-rgb) / 70%));
+}
+
+/* Stars pop in one by one once the panel scrolls into view */
+.panel:global(.is-visible) .stars svg {
+  animation: star-pop 0.7s var(--ease-out) both;
+  animation-delay: calc(400ms + var(--i) * 110ms);
+}
+
+@keyframes star-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.2) rotate(-40deg);
+  }
+
+  60% {
+    opacity: 1;
+    transform: scale(1.25) rotate(8deg);
+  }
+
+  100% {
+    transform: none;
+  }
+}
+
+.title {
+  margin-top: var(--space-6);
+  font-size: clamp(1.4rem, 4.6vw, 2.1rem);
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+/* Neon-tube word, like the printed poster */
+.title span {
+  display: block;
+  margin-top: var(--space-2);
+  font-family: var(--font-neon);
+  font-size: clamp(3.4rem, 16vw, 6rem);
+  font-weight: 400;
+  line-height: 1;
+  color: color-mix(in srgb, var(--accent-2) 30%, white);
+  text-shadow:
+    0 0 4px rgb(255 255 255 / 70%),
+    0 0 14px rgb(var(--accent-2-rgb) / 90%),
+    0 0 40px rgb(var(--accent-2-rgb) / 60%),
+    0 0 80px rgb(var(--accent-2-rgb) / 35%);
+}
+
+.panel:global(.is-visible) .title span {
+  animation: power-on 1.3s linear 0.6s both;
+}
+
+@keyframes power-on {
+  0% {
+    opacity: 0.15;
+    text-shadow: none;
+  }
+
+  8%,
+  22%,
+  36% {
+    opacity: 1;
+  }
+
+  14%,
+  30% {
+    opacity: 0.25;
+  }
+
+  50%,
+  100% {
+    opacity: 1;
+  }
+}
+
+.text {
+  max-width: 44ch;
+  margin-top: var(--space-4);
+  font-size: 1.05rem;
+  color: var(--muted);
+}
+
+.steps {
+  display: grid;
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+  text-align: left;
+}
+
+.steps li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-weight: 500;
+}
+
+.steps span {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 12px rgb(var(--accent-rgb) / 60%);
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--bg);
+}
+
+.steps li:nth-child(2) span {
+  background: var(--accent-4);
+  box-shadow: 0 0 12px rgb(var(--accent-4-rgb) / 60%);
+}
+
+.steps li:nth-child(3) span {
+  background: var(--accent-2);
+  box-shadow: 0 0 12px rgb(var(--accent-2-rgb) / 60%);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-3);
+  margin-top: var(--space-8);
+}
+
+@media (min-width: 900px) {
+  .actions {
+    justify-content: flex-start;
+  }
+}
+
+/* ── QR card ───────────────────────────────────────────────
+   The pill and sticker only reach into the code's white quiet zone
+   (4 of 45 modules, 16-24px depending on size), never onto the modules. */
+.qr {
+  display: grid;
+  place-items: center;
+  padding-block: var(--space-4) var(--space-8);
+}
+
+.qrCard {
+  position: relative;
+  /* Leaves room for the sticker's overhang on narrow phones */
+  width: min(280px, 100% - 48px);
+  padding: 6px;
+  border-radius: 30px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-3) 50%, var(--accent-2));
+  box-shadow:
+    0 0 24px rgb(var(--accent-rgb) / 35%),
+    0 0 70px rgb(var(--accent-2-rgb) / 28%);
+}
+
+.qrLink {
+  display: block;
+  border-radius: 24px;
+}
+
+.qrCard img {
+  width: 100%;
+  height: auto;
+  border-radius: 24px;
+}
+
+.scan {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  z-index: 1;
+  padding: 8px 18px;
+  border: 1.5px solid var(--accent);
+  border-radius: 999px;
+  background: var(--bg);
+  box-shadow: var(--glow);
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.28em;
+  text-indent: 0.28em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--accent);
+  transform: translate(-50%, -50%);
+}
+
+.sticker {
+  position: absolute;
+  right: -26px;
+  bottom: -24px;
+  z-index: 1;
+  padding: 9px 12px;
+  border-radius: 10px;
+  background: var(--accent-4);
+  box-shadow: 0 8px 20px rgb(0 0 0 / 50%);
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 800;
+  line-height: 1.15;
+  text-align: center;
+  text-transform: uppercase;
+  color: #1a1400;
+  transform: rotate(-8deg);
+  animation: bob 3.2s var(--ease-in-out) infinite;
+}
+
+/* Smaller code, narrower quiet zone: slimmer pill, sticker hangs lower */
+@media (max-width: 639px) {
+  .scan {
+    padding: 6px 14px;
+    font-size: 0.68rem;
+    letter-spacing: 0.22em;
+    text-indent: 0.22em;
+  }
+
+  .sticker {
+    bottom: -30px;
+  }
+}
+
+@keyframes bob {
+  50% {
+    transform: rotate(-4deg) translateY(-3px);
+  }
+}

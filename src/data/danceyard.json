@@ -237,6 +237,10 @@
     { "quote": "Our sangeet routine came together in three weeks, and everyone from my nephew to my grandmother nailed it.", "who": "Client", "detail": "Sangeet choreography" },
     { "quote": "Tough, fun and honest training. The audition prep gave me the confidence to go for a reality show.", "who": "Student", "detail": "Freestyle batch" }
   ],
+  "googleReview": {
+    "url": "https://g.page/r/CfmAyF6uKSfVECE/review",
+    "qr": "/images/google-review-qr.svg"
+  },
   "faqs": [
     { "q": "Where are the classes held?", "a": "At Podium 2, Megapolis Splendour Society, Phase 3, Rajiv Gandhi Infotech Park, Hinjawadi, Maharashtra 411057. Tap “Get directions” in the contact section for the map." },
     { "q": "Which dance styles can I learn?", "a": "We offer training in 35+ dance forms. Message us on WhatsApp for the full list and the batches running right now." },

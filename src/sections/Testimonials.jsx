@@ -3,6 +3,7 @@ import Icon from '../components/common/Icon'
 import SectionHeading from '../components/common/SectionHeading'
 import site from '../data/danceyard.json'
 import { reducedMotion } from '../utils/motion'
+import GoogleReview from './GoogleReview'
 import styles from './Testimonials.module.css'
 
 const AUTOPLAY_MS = 7000
@@ -79,6 +80,8 @@ function Testimonials() {
             </button>
           </div>
         </div>
+
+        <GoogleReview />
       </div>
     </section>
   )
