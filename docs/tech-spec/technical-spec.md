@@ -572,7 +572,7 @@ erDiagram
 | Key | Type | Used by | Notes |
 |---|---|---|---|
 | `name`, `shortName`, `positioning` | string | Footer, Contact, Privacy | |
-| `location` | `{ venue, street, locality, area, city, region, postalCode, mapQuery, mapUrl }` | `utils/contact`, Contact | `mapQuery` drives the embedded map; `mapUrl` (Google Maps share link) is the "Get directions" link; `area` + `city` are the short form used in copy |
+| `location` | `{ venue, street, locality, area, city, region, postalCode, country, mapCid, mapUrl }` | `utils/contact`, Contact | `mapCid` (the Google Business listing ID, kept as a string) drives the embedded map; `mapUrl` (Google Maps share link) is the "Get directions" link; `area` + `city` are the short form used in copy |
 | `contact` | see ER diagram | `utils/contact`, Header, Footer, Contact | `instagram` is optional – UI hides Instagram links when empty |
 | `hero` | `{ eyebrow, lead, slides: photoKey[], showreel: instagramCode }` | Hero | First slide loads eagerly; the showreel opens that Instagram reel in the video modal |
 | `stats` | `{ value, label }[]` | Hero | `value` like `"20+"`; `CountUp` animates the number part |
@@ -878,9 +878,10 @@ flowchart LR
 |---|---|---|
 | `whatsappLink` | `(message = contact.whatsappMessage) => string` | `wa.me` link with encoded message |
 | `phoneLink` | `string` | `tel:+91…` |
-| `mapEmbedUrl` | `string` | Google Maps embed URL for `location.mapQuery`, zoom 15 |
+| `mapEmbedUrl` | `string` | Google Maps embed URL for the listing `location.mapCid`, zoom 16 |
 | `directionsUrl` | `string` | `location.mapUrl` |
-| `addressLine` | `string` | "venue, street, locality, region postalCode" |
+| `addressName` | `string` | First address line: the studio's name as on the Google listing (`venue`) |
+| `addressLine` | `string` | "street, locality, city, region postalCode, country" |
 
 **`utils/media.js`**
 

@@ -3,15 +3,16 @@
   "shortName": "Dance Yard",
   "positioning": "Mumbai-based premium dance academy",
   "location": {
-    "venue": "Podium 2, Megapolis Splendour Society",
-    "street": "Phase 3, Rajiv Gandhi Infotech Park",
+    "venue": "Dance Yard 87 Studio",
+    "street": "MIDC Phase III Main Rd, Splendour Society, Phase 3, Rajiv Gandhi Infotech Park",
     "locality": "Hinjawadi",
     "area": "Hinjewadi Phase 3",
     "city": "Pune",
     "region": "Maharashtra",
     "postalCode": "411057",
-    "mapQuery": "Splendour Society, Phase 3, Rajiv Gandhi Infotech Park, Hinjawadi, Maharashtra 411057",
-    "mapUrl": "https://maps.app.goo.gl/ATBojFhwSGXV4GCb9"
+    "country": "India",
+    "mapCid": "15359290883061612793",
+    "mapUrl": "https://maps.app.goo.gl/zxDK9NJid1SYbLuv6"
   },
   "contact": {
     "whatsapp": "919021267998",
@@ -242,7 +243,7 @@
     "qr": "/images/google-review-qr.svg"
   },
   "faqs": [
-    { "q": "Where are the classes held?", "a": "At Podium 2, Megapolis Splendour Society, Phase 3, Rajiv Gandhi Infotech Park, Hinjawadi, Maharashtra 411057. Tap “Get directions” in the contact section for the map." },
+    { "q": "Where are the classes held?", "a": "At Dance Yard 87 Studio, MIDC Phase III Main Rd, Splendour Society, Phase 3, Rajiv Gandhi Infotech Park, Hinjawadi, Pune, Maharashtra 411057. Tap “Get directions” in the contact section for the map." },
     { "q": "Which dance styles can I learn?", "a": "We offer training in 35+ dance forms. Message us on WhatsApp for the full list and the batches running right now." },
     { "q": "Are beginners welcome?", "a": "Yes. Training starts with a basic dance workout and builds up to advanced dance practice, so you grow at your own pace." },
     { "q": "Who teaches at Dance Yard?", "a": "Mumbai-based professional dancers who have worked with some of Bollywood's biggest choreographers. They travel to Pune specially to teach our students." },

@@ -8,8 +8,13 @@ export function whatsappLink(message = contact.whatsappMessage) {
 
 export const phoneLink = `tel:${contact.phone}`
 
-export const mapEmbedUrl = `https://www.google.com/maps?q=${encodeURIComponent(location.mapQuery)}&z=15&output=embed`
+// Embeds the Google Business listing (name, rating, "Open in Maps") by its ID.
+// mapCid is a string: it is too large for a JSON number.
+export const mapEmbedUrl = `https://www.google.com/maps?cid=${location.mapCid}&z=16&output=embed`
 
 export const directionsUrl = location.mapUrl
 
-export const addressLine = `${location.venue}, ${location.street}, ${location.locality}, ${location.region} ${location.postalCode}`
+// Shown as two lines, as on the Google listing: the studio's name, then the address
+export const addressName = location.venue
+
+export const addressLine = `${location.street}, ${location.locality}, ${location.city}, ${location.region} ${location.postalCode}, ${location.country}`

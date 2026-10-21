@@ -1,5 +1,5 @@
 import site from '../../data/danceyard.json'
-import { addressLine, phoneLink, whatsappLink } from '../../utils/contact'
+import { addressLine, addressName, phoneLink, whatsappLink } from '../../utils/contact'
 import { allPhotos, unsplashPage } from '../../utils/media'
 import Icon from '../common/Icon'
 import Logo from '../common/Logo'
@@ -76,7 +76,11 @@ function Footer() {
           <ul className={styles.contact}>
             <li>
               <Icon name="pin" size={18} />
-              <span>{addressLine}</span>
+              <span>
+                {addressName}
+                <br />
+                {addressLine}
+              </span>
             </li>
             <li>
               <Icon name="whatsapp" size={18} />

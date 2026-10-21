@@ -2,7 +2,7 @@ import Icon from '../components/common/Icon'
 import Reveal from '../components/common/Reveal'
 import SectionHeading from '../components/common/SectionHeading'
 import site from '../data/danceyard.json'
-import { addressLine, directionsUrl, mapEmbedUrl, phoneLink, whatsappLink } from '../utils/contact'
+import { addressLine, addressName, directionsUrl, mapEmbedUrl, phoneLink, whatsappLink } from '../utils/contact'
 import styles from './Contact.module.css'
 
 const { contact } = site
@@ -18,7 +18,20 @@ function Contact() {
       external: true,
     },
     { icon: 'phone', label: 'Call', value: contact.phoneDisplay, href: phoneLink, action: 'Call now' },
-    { icon: 'pin', label: 'Visit', value: addressLine, href: directionsUrl, action: 'Get directions', external: true },
+    {
+      icon: 'pin',
+      label: 'Visit',
+      value: (
+        <>
+          {addressName}
+          <br />
+          {addressLine}
+        </>
+      ),
+      href: directionsUrl,
+      action: 'Get directions',
+      external: true,
+    },
     contact.instagram && {
       icon: 'instagram',
       label: 'Instagram',
@@ -70,7 +83,7 @@ function Contact() {
 
           <Reveal variant="clip" className={styles.map}>
             <iframe
-              title={`Map showing ${addressLine}`}
+              title={`Map showing ${addressName}, ${addressLine}`}
               src={mapEmbedUrl}
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
